@@ -1,0 +1,26 @@
+instances:
+  - url: https://fileforge.docs.buildwithfern.com
+title: OneDoc
+navigation:
+  - section: Overview
+    contents: 
+      - page: Introduction
+        path: ./pages/overview/introduction.mdx
+  - api: API Reference
+colors:
+  accentPrimary: 
+    dark: '#ffffff'
+  background: 
+    dark: '#000000'
+logo: 
+  dark: ./assets/logo-white.svg
+layout:
+  searchbar-placement: header
+navbar-links:
+  - type: minimal
+    text: Support
+    url: mailto:contact@onedoclabs.com
+  - type: outlined
+    text: Get Started
+    url: https://app.onedoclabs.com/login
+

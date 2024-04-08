@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: Test swagger
+  description: Testing the Fastify swagger API
+  version: 0.1.0
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas: {}
+paths:
+  /api/status/:
+    get:
+      responses:
+        "200":
+          description: Default Response
+  /api/pdf/generate/proxy/{bucketID}/{*}:
+    get:
+      tags:
+        - PDF
+      description: Proxies a file from a bucket
+      security:
+        - basicAuth: []
+      parameters:
+        - schema:
+            type: string
+          in: path
+          name: bucketID
+          required: true
+        - schema:
+            type: string
+          in: path
+          name: "*"
+          required: true
+      responses:
+        "200":
+          description: Default Response
+  /api/pdf/generate/:
+    post:
+      tags:
+        - PDF
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - files
+                - options
+              properties:
+                options:
+                  type: object
+                  required: []
+                  properties:
+                    world:
+                      type: string
+                files:
+                  allOf:
+                    - {}
+                    - type: array
+                      items:
+                        type: string
+                        format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      responses:
+        "200":
+          description: Default Response
+servers:
+  - url: https://37a8988debb4.ngrok.app
+    description: Tunnel server
+  - url: http://localhost:3000
+    description: Development server
