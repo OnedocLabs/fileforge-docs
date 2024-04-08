@@ -4,7 +4,7 @@ title: OneDoc
 navigation:
   - section: Overview
     contents: 
-      - page: Introduction
+      - page: Welcome
         path: ./pages/overview/introduction.mdx
   - api: API Reference
 colors:
