@@ -1,8 +1,8 @@
 paths: 
-  /api/status/:
+  /status/:
     get: 
       x-fern-ignore: true
-  /api/pdf/generate/:
+  /pdf/generate/:
     post: 
       summary: Generate a PDF
       x-fern-sdk-method-name: generate
