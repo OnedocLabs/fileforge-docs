@@ -8,35 +8,18 @@ components:
     basicAuth:
       type: http
       scheme: basic
+    apiKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
   schemas: {}
 paths:
-  /api/status/:
+  /status/:
     get:
       responses:
         "200":
           description: Default Response
-  /api/pdf/generate/proxy/{bucketID}/{*}:
-    get:
-      tags:
-        - PDF
-      description: Proxies a file from a bucket
-      security:
-        - basicAuth: []
-      parameters:
-        - schema:
-            type: string
-          in: path
-          name: bucketID
-          required: true
-        - schema:
-            type: string
-          in: path
-          name: "*"
-          required: true
-      responses:
-        "200":
-          description: Default Response
-  /api/pdf/generate/:
+  /pdf/generate/:
     post:
       tags:
         - PDF
@@ -66,11 +49,13 @@ paths:
               options:
                 contentType: application/json
         required: true
+      security:
+        - apiKey: []
       responses:
         "200":
           description: Default Response
 servers:
-  - url: https://37a8988debb4.ngrok.app
+  - url: https://30c1-2a01-cb00-286-f500-f58d-848f-e524-f098.ngrok-free.app
     description: Tunnel server
   - url: http://localhost:3000
     description: Development server

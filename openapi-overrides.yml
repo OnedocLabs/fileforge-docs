@@ -2,10 +2,6 @@ paths:
   /api/status/:
     get: 
       x-fern-ignore: true
-  /api/pdf/generate/proxy/{bucketID}/{*}:
-    get: 
-      summary: Proxies a file
-      x-fern-sdk-method-name: proxyFile
   /api/pdf/generate/:
     post: 
       summary: Generate a PDF
