@@ -1,7 +1,7 @@
 paths: 
   /status/:
     get: 
-      x-fern-ignore: true
+      summary: Retrieve server status
   /pdf/generate/:
     post: 
       summary: Generate a PDF
