@@ -38,13 +38,11 @@ paths:
                   properties:
                     world:
                       type: string
-                files:
-                  allOf:
-                    - {}
-                    - type: array
-                      items:
-                        type: string
-                        format: binary
+                files: 
+                  type: array
+                  items: 
+                    type: string
+                    format: binary
             encoding:
               options:
                 contentType: application/json
@@ -55,7 +53,7 @@ paths:
         "200":
           description: Default Response
 servers:
-  - url: https://30c1-2a01-cb00-286-f500-f58d-848f-e524-f098.ngrok-free.app
+  - url: https://52dc-2a02-1210-1850-c900-d81-da93-9d7-b849.ngrok-free.app
     description: Tunnel server
   - url: http://localhost:3000
     description: Development server
