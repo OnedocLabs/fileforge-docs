@@ -12,7 +12,28 @@ components:
       type: apiKey
       name: X-API-Key
       in: header
-  schemas: {}
+  schemas:
+    def-0:
+      type: object
+      required:
+        - statusCode
+        - code
+        - message
+      description: Generic error response schema
+      properties:
+        statusCode:
+          type: number
+          description: The HTTP status code
+          example: 400
+        code:
+          type: string
+          description: A machine-readable error code
+          example: BAD_REQUEST
+        message:
+          type: string
+          description: A human-readable message
+          example: No index.html file provided
+      title: ErrorSchema
 paths:
   /status/:
     get:
@@ -36,13 +57,35 @@ paths:
                   type: object
                   required: []
                   properties:
-                    world:
+                    test:
+                      type: boolean
+                      description: Generate a test document instead of a production document. The
+                        generated document will contain a watermark. Defaults to
+                        true.
+                      default: true
+                    host:
+                      type: boolean
+                      description: If enabled, the document will be hosted by FileForge and a
+                        presigned URL will be returned.
+                      default: false
+                    expiresAt:
                       type: string
-                files: 
-                  type: array
-                  items: 
-                    type: string
-                    format: binary
+                      format: date-time
+                      description: If host is enabled, the expiration date of the presigned URL.
+                        Defaults to 7 days from now. Cannot exceed 7 days from
+                        now.
+                    fileName:
+                      type: string
+                      description: The name of the generated PDF file. Defaults to document. The file
+                        name should not contain extensions nor path traversals.
+                      default: document
+                files:
+                  allOf:
+                    - {}
+                    - type: array
+                      items:
+                        type: string
+                        format: binary
             encoding:
               options:
                 contentType: application/json
@@ -50,10 +93,49 @@ paths:
       security:
         - apiKey: []
       responses:
-        "200":
-          description: Default Response
+        "201":
+          description: PDF Document generated successfully
+          content:
+            application/pdf:
+              description: PDF Document
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: object
+                required:
+                  - url
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    description: URL to the generated PDF document
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: "#/components/schemas/def-0"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: "#/components/schemas/def-0"
+        "500":
+          description: Internal server error
+        "502":
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                description: Bad Gateway
+                $ref: "#/components/schemas/def-0"
 servers:
-  - url: https://52dc-2a02-1210-1850-c900-d81-da93-9d7-b849.ngrok-free.app
+  - url: https://ee1d-2a02-1210-1850-c900-d930-be3a-2515-ca90.ngrok-free.app
     description: Tunnel server
   - url: http://localhost:3000
     description: Development server
