@@ -135,7 +135,7 @@ paths:
                 description: Bad Gateway
                 $ref: "#/components/schemas/def-0"
 servers:
-  - url: https://ee1d-2a02-1210-1850-c900-d930-be3a-2515-ca90.ngrok-free.app
+  - url: https://api.fileforge.com
     description: Tunnel server
   - url: http://localhost:3000
     description: Development server
