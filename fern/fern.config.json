@@ -1,8 +1,4 @@
 {
   "organization": "fileforge",
-<<<<<<< HEAD
   "version": "0.26.6"
-=======
-  "version": "0.21.0"
->>>>>>> 7d6c3d7 (Supports docs.yml retrieval from react-print Git repo)
 }
