@@ -1,3 +1,17 @@
-api: 
- - path: ../openapi.yml
-   overrides: ../openapi-overrides.yml
+api:
+  - path: ../openapi.yml
+    overrides: ../openapi-overrides.yml
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.16.0-rc8
+        output:
+          location: npm
+          package-name: 'fileforge'
+          # token: ${NPM_TOKEN}
+        github:
+          repository: OnedocLabs/fileforge-node-sdk
+          license: MIT
+        config:
+          namespaceExport: FileForge
