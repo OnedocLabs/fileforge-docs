@@ -134,6 +134,61 @@ paths:
               schema:
                 description: Bad Gateway
                 $ref: "#/components/schemas/def-0"
+  /pdf/merge/:
+    post:
+      tags:
+        - PDF
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - files
+                - options
+              properties:
+                options:
+                  type: object
+                  required: []
+                  properties: {}
+                files:
+                  allOf:
+                    - {}
+                    - type: array
+                      items:
+                        type: string
+                        format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      responses:
+        "201":
+          description: PDF Document generated successfully
+          content:
+            application/pdf:
+              description: PDF Document
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: "#/components/schemas/def-0"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: "#/components/schemas/def-0"
+        "500":
+          description: Internal server error
 servers:
   - url: https://api.fileforge.com
     description: Tunnel server

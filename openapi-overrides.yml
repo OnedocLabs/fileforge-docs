@@ -2,8 +2,14 @@ paths:
   /status/:
     get: 
       summary: Retrieve server status
+
   /pdf/generate/:
     post: 
       summary: Generate a PDF
+      x-fern-sdk-group-name: PDF
       x-fern-sdk-method-name: generate
-  
+  /pdf/merge/:
+    post: 
+      summary: Merge PDFs
+      x-fern-sdk-group-name: PDF
+      x-fern-sdk-method-name: merge
