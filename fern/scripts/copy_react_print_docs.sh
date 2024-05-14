@@ -1,5 +1,3 @@
-git clone --depth=1  https://github.com/OnedocLabs/react-print-pdf.git
+git clone --single-branch --branch ffo-48-include-documentation-for-the-react-print-library-with https://github.com/OnedocLabs/react-print-pdf.git
 cd react-print-pdf
-git sparse-checkout set --no-cone docs
-
-
+cp ./docs/docs.yml ../fern/docs.yml
