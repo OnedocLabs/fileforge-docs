@@ -2,7 +2,11 @@ paths:
   /status/:
     get: 
       summary: Retrieve server status
-
+  /pdf/docx/:
+    post: 
+      summary: Convert a DOC or DOCX to PDF 
+      x-fern-sdk-group-name: PDF
+      x-fern-sdk-method-name: convert_docx
   /pdf/generate/:
     post: 
       summary: Generate a PDF
