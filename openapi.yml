@@ -31,8 +31,9 @@ components:
           example: BAD_REQUEST
         message:
           type: string
-          description: A human-readable message
-          example: No index.html file provided
+          description: A human-readable message. This field may also provide additional
+            context to the error code.
+          example: Bad request
       title: ErrorSchema
 paths:
   /status/:
@@ -40,10 +41,149 @@ paths:
       responses:
         "200":
           description: Default Response
-  /pdf/generate/:
+  /pdf/docx/:
     post:
+      summary: Converts a DOC or DOCX document to PDF.
       tags:
         - PDF
+      description: >-
+        Converts a Microsoft Word document (.DOCX or .DOC) file to a PDF
+        document.
+
+
+        This service uses a LibreOffice headless server to perform the
+        conversion, and may not support all features of the original document.
+
+
+        **Known discrepancies**
+
+
+        * Some fonts may not be available in the server, and may be substituted
+        by a closest match.
+
+        * Some complex formatting may not be preserved, such as background
+        graphics.
+
+
+        **Variables**
+
+
+        Variable replacement is supported with various methods:
+
+
+        * Templated litterals: `{{name}}`
+
+        * Word variables, as listed in the document metadata: `{DOCVARIABLE
+        "name"}`
+
+
+        To enable variable replacement as Word variables for your account,
+        please contact the FileForge support.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - options
+              properties:
+                options:
+                  description: >-
+                    Conversion options. This field is required even if empty.
+
+
+                    **Options**
+
+
+                    * `templateLiterals`: Map of template literals to replace in
+                    the document. Template literals should be enclosed in double
+                    curly braces, e.g. `{{name}}`. Variables name can contain
+                    alphanumeric characters and hyphens. All variables are
+                    case-sensitive. The value for each variable should be a
+                    string. If a value of undefined is passed, the variable will
+                    not be removed from the document. If you need to remove a
+                    variable, pass an empty string as the value.
+
+
+                    **NB** variables should **not** have surrounding spaces,
+                    e.g. `{{ name }}`.
+
+
+                    **Example**
+
+
+                    In the Word document: `{{name}} {{nickname}}. was born on
+                    {{date}}.`
+
+
+                    ```json
+
+                    {
+                      "templateLiterals": {
+                        "name": "John Doe",
+                        "date": "2021-12-31",
+                        "nickname": ""
+                      }
+                    }
+
+                    ```
+
+
+                    There will not be an error if a variable is not found in the
+                    document, nor if variables found in the document are not in
+                    the options.
+                  type: object
+                  required: []
+                  properties:
+                    templateLiterals:
+                      type: object
+                      description: Map of template literals to replace in the document.
+                      additionalProperties:
+                        type: string
+                file:
+                  description: The Microsoft Word document (.DOCX or .DOC) file to convert to PDF.
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      responses:
+        "201":
+          description: PDF Document generated successfully
+          content:
+            application/pdf:
+              description: PDF Document
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: "#/components/schemas/def-0"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: "#/components/schemas/def-0"
+        "500":
+          description: Internal server error
+  /pdf/generate/:
+    post:
+      summary: Generates a PDF document from HTML and web technologies.
+      tags:
+        - PDF
+      description: |+
+        Generates a PDF document from web assets.
+
       requestBody:
         content:
           multipart/form-data:
@@ -54,6 +194,7 @@ paths:
                 - options
               properties:
                 options:
+                  description: Conversion options. This field is required even if empty.
                   type: object
                   required: []
                   properties:
@@ -80,6 +221,24 @@ paths:
                         name should not contain extensions nor path traversals.
                       default: document
                 files:
+                  description: >-
+                    Files to generate the PDF document from.
+
+
+                    An `index.html` file is required, and will be used as the
+                    main document. Other documents may also be attached, such as
+                    stylesheets or images. The path in the `filename` part of
+                    the multipart attachement will be respected during
+                    generation.
+
+
+                    **Important notice**: during generation, the `index.html`
+                    file will be processed to include the base URL of the
+                    document. This is required for assets to be loaded
+                    correctly. To link your assets from the HTML file, you
+                    should not use a leading slash in the URL. For example, use
+                    `<img src="image.jpg" />` instead of `<img src="/image.jpg"
+                    />`.
                   allOf:
                     - {}
                     - type: array
