@@ -6,13 +6,27 @@ groups:
   ts-sdk:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.16.0-rc8
+        version: 0.20.0-rc1
         output:
           location: npm
           package-name: 'fileforge'
-          # token: ${NPM_TOKEN}
+          #token: ${NPM_TOKEN}
         github:
           repository: OnedocLabs/fileforge-node-sdk
           license: MIT
         config:
-          namespaceExport: FileForge
+          namespaceExport: Fileforge
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 2.5.2
+        output:
+          location: pypi
+          package-name: 'fileforge'
+          #token: ${ PYPI_TOKEN }
+        github:
+          repository: OnedocsLabs/fileforge-python-sdk
+          license: MIT
+        config:
+          client_class_name: Fileforge
+          package_name: fileforge
