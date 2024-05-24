@@ -16,6 +16,9 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
 
+      - name: Retrieve react-print docs and build docs.yml
+        run: sh fern/scripts/copy_react_print_docs.sh
+
       - name: Publish Docs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
