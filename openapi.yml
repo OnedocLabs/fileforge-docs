@@ -356,6 +356,341 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
+  /pdf/form/detect/:
+    post:
+      summary: Detect form fields in a PDF document
+      tags:
+        - PDF
+        - form
+      description: >-
+        Returns a list of form fields detected in the PDF document, along with
+        their location, options and requirements. For a more visual
+        representation, use the /pdf/form/mark endpoint.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                options:
+                  type: object
+                  required: []
+                  properties: {}
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      responses:
+        '200':
+          description: Document fields detected successfully
+          content:
+            application/json:
+              schema:
+                description: Document fields detected successfully
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    required:
+                      type: boolean
+                    readOnly:
+                      type: boolean
+                    locations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          x:
+                            type: number
+                          'y':
+                            type: number
+                          width:
+                            type: number
+                          height:
+                            type: number
+                        required:
+                          - x
+                          - 'y'
+                          - width
+                          - height
+                  required:
+                    - name
+                    - type
+                    - required
+                    - readOnly
+                    - locations
+                  anyOf:
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFCheckBox
+                        isChecked:
+                          type: boolean
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFDropdown
+                            - PDFOptionList
+                        options:
+                          type: array
+                          items:
+                            type: string
+                        isMultiselect:
+                          type: boolean
+                        selected:
+                          type: array
+                        isEditable:
+                          type: boolean
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFRadioGroup
+                        options:
+                          type: array
+                        selected:
+                          type: string
+                        isMutuallyExclusive:
+                          type: boolean
+                        isOffToggleable:
+                          type: boolean
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFTextField
+                        defaultValue:
+                          type: string
+                        isPassword:
+                          type: boolean
+                        isRichFormatted:
+                          type: boolean
+                        isScrollable:
+                          type: boolean
+                        isCombed:
+                          type: boolean
+                        isMultiline:
+                          type: boolean
+                        isFileSelector:
+                          type: boolean
+                        maxLength:
+                          type: number
+                      required:
+                        - type
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: '#/components/schemas/def-0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: '#/components/schemas/def-0'
+        '500':
+          description: Internal server error
+  /pdf/form/mark/:
+    post:
+      summary: Mark form fields in a PDF document
+      tags:
+        - PDF
+        - form
+      description: >-
+        Returns a modified PDF document with form fields marked with a green
+        border, and hover text showing the field name.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                options:
+                  type: object
+                  required: []
+                  properties: {}
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      responses:
+        '201':
+          description: Marked PDF Document generated successfully
+          content:
+            application/pdf:
+              description: PDF Document
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: '#/components/schemas/def-0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: '#/components/schemas/def-0'
+        '500':
+          description: Internal server error
+  /pdf/form/fill/:
+    post:
+      summary: Fill form fields in a PDF document
+      tags:
+        - PDF
+        - form
+      description: >-
+        Returns a modified PDF document with filled form fields. A subset of
+        fields can be filled.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - options
+              properties:
+                options:
+                  type: object
+                  required:
+                    - fields
+                  properties:
+                    fields:
+                      type: array
+                      description: Fields to fill or change in the PDF document.
+                      items:
+                        type: object
+                        required:
+                          - name
+                          - type
+                        properties:
+                          name:
+                            description: >-
+                              Name of the field to fill. This must match an
+                              exact name from the PDF document. To detect all
+                              fields, use the /pdf/form/fields endpoint, or use
+                              the /pdf/form/mark endpoint to get an annotated
+                              PDF with each detected field.
+                            type: string
+                        anyOf:
+                          - type: object
+                            required:
+                              - type
+                              - value
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                  - PDFTextField
+                              value:
+                                type: string
+                          - type: object
+                            required:
+                              - type
+                              - checked
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                  - PDFCheckBox
+                              checked:
+                                type: boolean
+                          - type: object
+                            required:
+                              - type
+                              - selected
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                  - PDFOptionList
+                                  - PDFDropdown
+                              selected:
+                                type: array
+                                items:
+                                  type: string
+                          - type: object
+                            required:
+                              - type
+                              - selected
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                  - PDFRadioGroup
+                              selected:
+                                type: string
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      responses:
+        '201':
+          description: PDF Document filled successfully
+          content:
+            application/pdf:
+              description: PDF Document
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: '#/components/schemas/def-0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: '#/components/schemas/def-0'
+        '500':
+          description: Internal server error
 servers:
   - url: https://api.fileforge.com
     description: Tunnel server
