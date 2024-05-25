@@ -25,7 +25,7 @@ groups:
           package-name: 'fileforge'
           #token: ${ PYPI_TOKEN }
         github:
-          repository: OnedocsLabs/fileforge-python-sdk
+          repository: OnedocLabs/fileforge-python-sdk
           license: MIT
         config:
           client_class_name: Fileforge
