@@ -1,3 +1,12 @@
+components: 
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+      x-fern-header:
+        name: apiKey
+        env: FILEFORGE_API_KEY
 paths: 
   /status/:
     get: 
