@@ -9,8 +9,8 @@ groups:
         version: 0.20.0-rc1
         output:
           location: npm
-          package-name: 'fileforge'
-          #token: ${NPM_TOKEN}
+          package-name: '@fileforge/client'
+          token: ${NPM_TOKEN}
         github:
           repository: OnedocLabs/fileforge-node-sdk
           license: MIT
@@ -23,7 +23,7 @@ groups:
         output:
           location: pypi
           package-name: 'fileforge'
-          #token: ${ PYPI_TOKEN }
+          token: ${ PYPI_TOKEN }
         github:
           repository: OnedocLabs/fileforge-python-sdk
           license: MIT
