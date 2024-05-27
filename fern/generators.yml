@@ -16,6 +16,11 @@ groups:
           license: MIT
         config:
           namespaceExport: Fileforge
+          extraDevDependencies:
+            "@types/mime-types": "^2.1.4"
+          extraDependencies:
+            "mime-types": "^2.1.35"
+
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
