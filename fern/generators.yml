@@ -9,7 +9,7 @@ groups:
         version: 0.20.0-rc1
         output:
           location: npm
-          package-name: '@Fileforge/client'
+          package-name: '@fileforge/client'
           token: ${NPM_TOKEN}
         github:
           repository: OnedocLabs/fileforge-node-sdk

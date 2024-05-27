@@ -169,7 +169,7 @@ navigation:
             slug: authentication
       - api: API Reference
         snippets: 
-          typescript: "@Fileforge/client"
+          typescript: "@fileforge/client"
           python: "fileforge"
   - tab: help
     layout:
