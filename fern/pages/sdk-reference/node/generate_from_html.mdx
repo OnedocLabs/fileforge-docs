@@ -1,0 +1,61 @@
+#### Description
+
+The `generate_from_html` function generates a PDF document from web assets (HTML content and optional associated files). This function communicates with the Fileforge API to process the input and return a response containing either a URL to the generated PDF or a stream of the PDF file.
+
+#### Function Signature
+
+```typescript
+async function generate_from_html(
+    client: FileForgeClient,
+    document: DocumentInput
+): Promise<ResponseObject>
+```
+
+#### Parameters
+
+- `client: FileForgeClient`: An instance of the `FileForgeClient` used to communicate with the FileForge API.
+- `document: DocumentInput`: An object containing the HTML content and optional additional assets for generating the PDF. This object includes the following properties:
+  - `html: string`: The HTML content to be converted into a PDF.
+  - `fileName?: string`: Optional. The name of the generated PDF file. Defaults to document. The file name should not contain extensions nor path traversals.
+  - `test?: boolean`: Optional. Generate a test document instead of a production document. **The test document will contain a watermark and will not be charged.** Defaults to `true`.
+  - `host?: boolean`: Optional. If enabled, the document will be hosted by FileForge and a presigned URL will be returned. Defaults to `false`.
+  - `expiresAt?: Date`: Optional. If host is enabled, the expiration date of the presigned URL. Defaults to `7 days` from now. Cannot exceed `7 days` from now.
+  - `files?: AssetOrPathBuffer[]`: Optional. An array of additional assets (e.g., CSS, images) required for generating the PDF. This is either a list of `{path: string; content: string;}` or `{path: string; content: Buffer;}`
+
+
+#### Returns
+
+`Promise<ResponseObject>`: A promise that resolves to a `ResponseObject`, which can be one of the following:
+- `ResponseURL`: An object containing the URL to the generated PDF.
+  - `url: string`: The URL to access the generated PDF.
+- `ResponseStream`: An object containing a readable stream of the generated PDF file.
+  - `file: stream.Readable`: A readable stream of the PDF file.
+
+
+#### Example Usage
+
+```typescript
+const htmlBlob = new Blob([HTML], {
+    type: "text/html",
+});
+const cssBlob = new Blob([CSS], {
+    type: "text/css",
+});
+const htmlFile = new File([htmlBlob], "index.html", { type: "text/html" });
+const cssFile = new File([cssBlob], "style.css", { type: "text/css" });
+
+const ff = new FileForgeClient({
+    apiKey: FILEFORGE_API_KEY
+});
+
+const pdf = await ff.generate(
+    [htmlFile, cssFile], 
+    {
+        options: {}
+    }
+) as ResponseStream;    
+
+// Write the PDF stream to a file
+const writeStream = fs.createWriteStream('output.pdf');
+pdf.file.pipe(writeStream);
+```
