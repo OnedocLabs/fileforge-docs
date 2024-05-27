@@ -16,3 +16,6 @@ paths:
     post: 
       summary: Merge PDFs
       x-fern-sdk-method-name: merge
+components:
+  securitySchemes:
+    basicAuth: null
