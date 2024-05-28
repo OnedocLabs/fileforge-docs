@@ -1,3 +1,5 @@
+### `generate_from_html` Function Documentation
+
 #### Description
 
 The `generate_from_html` function generates a PDF document from web assets (HTML content and optional associated files). This function communicates with the Fileforge API to process the input and return a response containing either a URL to the generated PDF or a stream of the PDF file.
@@ -34,26 +36,37 @@ async function generate_from_html(
 
 #### Example Usage
 
-```typescript
-const htmlBlob = new Blob([HTML], {
-    type: "text/html",
-});
-const cssBlob = new Blob([CSS], {
-    type: "text/css",
-});
-const htmlFile = new File([htmlBlob], "index.html", { type: "text/html" });
-const cssFile = new File([cssBlob], "style.css", { type: "text/css" });
+Write your HTML
 
-const ff = new FileForgeClient({
+```typescript
+const HTML = `<!DOCTYPE html>
+<html>
+  <head>
+    <title>My First document</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>
+`;
+```
+Render it to PDF
+```typescript
+import { generate_from_html, ResponseStream } from "@fileforge/client";
+
+const client = new FileForgeClient({
     apiKey: FILEFORGE_API_KEY
 });
 
-const pdf = await ff.generate(
-    [htmlFile, cssFile], 
-    {
-        options: {}
-    }
-) as ResponseStream;    
+const documentInput = {
+    html: HTML,
+    test: true // renders a document w/ watermark, not billed
+};
+
+const pdf = await generate_from_html(
+    client, 
+    documentInput
+) as ResponseStream; 
 
 // Write the PDF stream to a file
 const writeStream = fs.createWriteStream('output.pdf');
