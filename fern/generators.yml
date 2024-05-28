@@ -9,13 +9,18 @@ groups:
         version: 0.20.0-rc1
         output:
           location: npm
-          package-name: 'fileforge'
-          #token: ${NPM_TOKEN}
+          package-name: '@fileforge/client'
+          token: ${NPM_TOKEN}
         github:
           repository: OnedocLabs/fileforge-node-sdk
           license: MIT
         config:
           namespaceExport: Fileforge
+          extraDevDependencies:
+            "@types/mime-types": "^2.1.4"
+          extraDependencies:
+            "mime-types": "^2.1.35"
+
   python-sdk:
     generators:
       - name: fernapi/fern-python-sdk
@@ -23,7 +28,7 @@ groups:
         output:
           location: pypi
           package-name: 'fileforge'
-          #token: ${ PYPI_TOKEN }
+          token: ${ PYPI_TOKEN }
         github:
           repository: OnedocLabs/fileforge-python-sdk
           license: MIT
