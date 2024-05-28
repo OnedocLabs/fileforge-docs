@@ -9,18 +9,29 @@ Ensure you have the following:
 
 #### Example Code
 
+Write your react component:
+
 ```typescript
-// HTML content with an embedded image
-const HTML = `<!DOCTYPE html>
-<html>
-    <head>
-        <title>My First Document</title>
-    </head>
-    <body>
+import React from 'react';
+
+// Define the HelloWorld component
+const HelloWorld = () => {
+    return (
         <h1>Hello World!</h1>
-    </body>
-</html>
-`
+    );
+};
+
+// Export the HelloWorld component
+export default HelloWorld;
+```
+
+Compile it to HTML using react-print's [compile](/react-print/components/compile/compile) function:
+
+```typescript
+import { compile } from "@fileforge/client";
+import HelloWorld from "...";
+
+const HTML = compile(<HelloWorld />);
 ```
 
 By setting the `documentInput.host` property to `true`, the Fileforge API will now return a url to your file. 
@@ -38,8 +49,6 @@ const documentInput = {
     fileName: 'example',
     test: true,
     host: true,
-    // sets the document to be hosted for 24 hours from now
-    expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), 
 };
 
 const pdf = await generate_from_html(
