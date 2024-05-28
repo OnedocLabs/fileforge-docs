@@ -137,6 +137,11 @@ paths:
                   type: object
                   required: []
                   properties:
+                    keepOriginalStyles:
+                      type: boolean
+                      description: >-
+                        Whether to keep the text formatting of the variables in
+                        the document. Default is true.
                     templateLiterals:
                       type: object
                       description: Map of template literals to replace in the document.
