@@ -5,6 +5,9 @@ info:
   version: 0.1.0
 components:
   securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
     apiKey:
       type: apiKey
       name: X-API-Key
