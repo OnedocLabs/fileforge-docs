@@ -39,11 +39,21 @@ components:
 paths:
   /status/:
     get:
+      operationId: getStatus
+      description: Get the status of the API
       responses:
         '200':
           description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
   /pdf/docx/:
     post:
+      operationId: convertDOCXtoPDF
       summary: Converts a DOC or DOCX document to PDF.
       tags:
         - PDF
@@ -135,7 +145,6 @@ paths:
                     document, nor if variables found in the document are not in
                     the options.
                   type: object
-                  required: []
                   properties:
                     keepOriginalStyles:
                       type: boolean
@@ -164,7 +173,6 @@ paths:
           description: PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
@@ -186,12 +194,11 @@ paths:
           description: Internal server error
   /pdf/generate/:
     post:
+      operationId: generatePDFDocument
       summary: Generates a PDF document from HTML and web technologies.
       tags:
         - PDF
-      description: |+
-        Generates a PDF document from web assets.
-
+      description: Generates a PDF document from web assets.
       requestBody:
         content:
           multipart/form-data:
@@ -204,7 +211,6 @@ paths:
                 options:
                   description: Conversion options. This field is required even if empty.
                   type: object
-                  required: []
                   properties:
                     test:
                       type: boolean
@@ -264,12 +270,14 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-operation-name: generate
       responses:
         '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
@@ -308,6 +316,7 @@ paths:
                 $ref: '#/components/schemas/def-0'
   /pdf/merge/:
     post:
+      operationId: mergePDFDocuments
       tags:
         - PDF
       requestBody:
@@ -321,7 +330,6 @@ paths:
               properties:
                 options:
                   type: object
-                  required: []
                   properties: {}
                 files:
                   allOf:
@@ -336,12 +344,14 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-operation-name: merge
       responses:
         '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
@@ -363,6 +373,7 @@ paths:
           description: Internal server error
   /pdf/form/detect/:
     post:
+      operationId: detectPDFFormFields
       summary: Detect form fields in a PDF document
       tags:
         - PDF
@@ -381,7 +392,6 @@ paths:
               properties:
                 options:
                   type: object
-                  required: []
                   properties: {}
                 file:
                   type: string
@@ -392,6 +402,10 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+        - form
+      x-fern-sdk-operation-name: detect
       responses:
         '200':
           description: Document fields detected successfully
@@ -459,6 +473,8 @@ paths:
                           type: boolean
                         selected:
                           type: array
+                          items:
+                            type: string
                         isEditable:
                           type: boolean
                       required:
@@ -471,6 +487,8 @@ paths:
                             - PDFRadioGroup
                         options:
                           type: array
+                          items:
+                            type: string
                         selected:
                           type: string
                         isMutuallyExclusive:
@@ -521,6 +539,7 @@ paths:
           description: Internal server error
   /pdf/form/mark/:
     post:
+      operationId: markPDFFormFields
       summary: Mark form fields in a PDF document
       tags:
         - PDF
@@ -538,7 +557,6 @@ paths:
               properties:
                 options:
                   type: object
-                  required: []
                   properties: {}
                 file:
                   type: string
@@ -549,12 +567,15 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+        - form
+      x-fern-sdk-operation-name: mark
       responses:
         '201':
           description: Marked PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
@@ -576,6 +597,7 @@ paths:
           description: Internal server error
   /pdf/form/fill/:
     post:
+      operationId: fillPDFFormFields
       summary: Fill form fields in a PDF document
       tags:
         - PDF
@@ -671,12 +693,15 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+        - form
+      x-fern-sdk-operation-name: fill
       responses:
         '201':
           description: PDF Document filled successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
@@ -701,3 +726,8 @@ servers:
     description: Tunnel server
   - url: http://localhost:3000
     description: Development server
+tags:
+  - name: PDF
+    description: PDF operations
+  - name: form
+    description: PDF form operations
