@@ -44,9 +44,9 @@ The HTML is rendered to PDF as shown below.
 The css and svg are passed to the Fileforge API in `documentInput.files`.
 
 ```typescript
-import { generate_from_html, ResponseStream } from "@fileforge/client";
+import { FileforgeClient, generateFromHtml, ResponseStream } from "@fileforge/client";
 
-const ff = new FileForgeClient({
+const ff = new FileforgeClient({
     apiKey: FILEFORGE_API_KEY
 });
 
@@ -60,7 +60,7 @@ const documentInput = {
     ],
 };
 
-const pdf = await generate_from_html(
+const pdf = await generateFromHtml(
     ff, 
     documentInput
 ) as ResponseStream; 

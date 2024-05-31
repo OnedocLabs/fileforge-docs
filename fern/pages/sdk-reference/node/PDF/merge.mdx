@@ -1,0 +1,68 @@
+### `merge` Function Documentation
+
+#### Description
+
+The `merge` function merges multiple PDF documents into a single PDF document.
+
+#### Function Signature
+
+```typescript
+public async merge(
+    files: File[] | fs.ReadStream[],
+    request: Fileforge.PdfMergeRequest,
+    requestOptions?: Pdf.RequestOptions
+): Promise<stream.Readable>
+```
+
+#### Parameters
+
+- `files` (`File[] | fs.ReadStream[]`): An array of `File` objects or `ReadStream` objects to be included in the PDF merge request.
+- `request`: An object with an `options` key that contains an empty object `{}` for now. This object is reserved for future use.
+- `requestOptions` (optional): Additional settings for the request, such as timeout, retries, and abort signals.
+
+| Option              | Type                   | Default | Description                                                                     |
+|---------------------|------------------------|---------|---------------------------------------------------------------------------------|
+| `timeoutInSeconds`  | number                 | Yes     | Specifies the timeout for the request in seconds.                               |
+| `maxRetries`        | number                 | Yes     | Defines the maximum number of retries for the request.                          |
+| `abortSignal`       | AbortSignal            | Yes     | Provides a mechanism to abort the request using an `AbortSignal`.               |
+
+#### Returns
+
+`Promise<stream.Readable>`: a promise which resolves with the merged PDF as a readable stream if the request is successful.
+
+#### Usage Example
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+
+const ff = new FileforgeClient({
+  apiKey: process.env.FILEFORGE_API_KEY,
+});
+
+try {
+  const pdfFiles = [
+    new File(["PDF content here"], "document1.pdf", {
+      type: "application/pdf",
+    }),
+    new File(["PDF content here"], "document2.pdf", {
+      type: "application/pdf",
+    }),
+  ];
+
+  const mergedPdfStream = await ff.pdf.merge(
+    pdfFiles,
+    {
+      options: {
+        // Specify merge options if any
+      },
+    },
+    {
+      timeoutInSeconds: 60
+    }
+  );
+
+  console.log("PDF merge successful. Stream ready.");
+} catch (error) {
+  console.error("Error during PDF merge:", error);
+}
+```

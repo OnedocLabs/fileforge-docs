@@ -1,0 +1,80 @@
+### `generate` Function Documentation
+
+#### Description
+
+The `generate` function generates a PDF document from web assets (HTML content and optional associated files).
+
+#### Function Signature
+
+```typescript
+public async generate<Options extends Fileforge.PdfGenerateRequest>(
+    files: File[] | fs.ReadStream[],
+    options: Options,
+    request?: Pdf.RequestOptions,
+  ): Promise<
+    Options extends { options: { host: true } }
+      ? {
+          url: string;
+        }
+      : Awaited<stream.Readable>
+  > 
+```
+
+#### Parameters
+
+- `files` (`File[] | fs.ReadStream[]`): An array of `File` objects or `ReadStream` objects to be included in the PDF generation request.
+- `request`: An object with a key `options` that contains the following **optional** options:
+    
+| Option      | Type    | Default               | Constraints                                      | Description                                                                                                                                                                 |
+|-------------|---------|-----------------------|--------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `test`      | boolean | `true`                |                                                  | Determines whether to generate a test document instead of a production document. Test documents include a watermark to indicate their status.                              |
+| `host`      | boolean | `false`               |                                                  | Enables hosting of the generated PDF document by FileForge. When set to `true`, FileForge manages the document storage and provides a presigned URL for access.             |
+| `expiresAt` | Date    | 7 days from generation| The expiration date cannot exceed 7 days from the generation date. | Specifies the expiration date of the presigned URL when the `host` option is enabled. This controls how long the document will be accessible via the presigned URL before it expires. |
+| `fileName`  | string  | `"document"`          | The file name should not include file extensions or path traversal characters such as `/` or `\\`. | Sets the name of the generated PDF file. This name is used when saving the file and in any hosted URLs provided by FileForge. It allows for easier identification of documents but must be handled carefully to avoid file system conflicts. |
+
+- `requestOptions` (optional): Additional options for the request, such as timeout settings and retry behavior.
+
+| Property         | Type          | Optional | Description                                                      |
+|------------------|---------------|----------|------------------------------------------------------------------|
+| `timeoutInSeconds` | number        | Yes      | Specifies the timeout for the request in seconds.                |
+| `maxRetries`     | number        | Yes      | Defines the maximum number of retries for the request.           |
+| `abortSignal`    | AbortSignal   | Yes      | Provides a mechanism to abort the request using an `AbortSignal`.|
+
+
+#### Returns
+
+`Promise<stream.Readable>`: a promise which resolves with the generated PDF as a readable stream if the request is successful.
+
+#### Example Usage
+
+Write your HTML
+
+```typescript
+const HTML = `<!doctype html><html><body><h1>Hello world</h1></body></html>"`;
+```
+Render it to PDF
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+
+const ff = new FileforgeClient({
+      apiKey: process.env.FILEFORGE_API_KEY,
+    });
+const document = await ff.pdf.generate(
+      [
+        new File(
+          [HTML],
+          "index.html",
+          {
+            type: "text/html",
+          },
+        ),
+      ],
+      {
+        options: {
+          host: true,
+        },
+      },
+    );
+
+console.log(document.url);
+```

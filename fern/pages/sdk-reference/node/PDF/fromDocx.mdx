@@ -1,0 +1,75 @@
+### `fromDocx` Function Documentation
+
+#### Description
+
+The `fromDocx` function converts a Microsoft Word document (either .DOCX or .DOC) into a PDF document. This service operates on a LibreOffice headless server, and it may not fully support all the original document features due to server limitations.
+
+#### Function Signature
+
+```typescript
+public async fromDocx(
+    file: File | fs.ReadStream,
+    request: Fileforge.PdfFromDocxRequest,
+    requestOptions?: Pdf.RequestOptions
+): Promise<stream.Readable>
+```
+
+#### Parameters
+
+- `file` (`File` | `fs.ReadStream`): The Word document file to be converted. This can be either a `File` object or a `ReadStream`.
+- `request`: An object with a key `options` that contains the following **optional** options:
+
+| Option              | Type                   | Default | Description                                                                     |
+|---------------------|------------------------|---------|---------------------------------------------------------------------------------|
+| `keepOriginalStyles` | boolean                | `true`  | Whether to keep the text formatting of the variables in the document.            |
+| `templateLiterals`  | Record< string, string> | `null`  | Map of template literals to replace in the document.                             |
+
+
+- `requestOptions` (optional): Additional options for the request, such as timeout settings and retry behavior.
+
+| Property         | Type          | Optional | Description                                                      |
+|------------------|---------------|----------|------------------------------------------------------------------|
+| `timeoutInSeconds` | number        | Yes      | Specifies the timeout for the request in seconds.                |
+| `maxRetries`     | number        | Yes      | Defines the maximum number of retries for the request.           |
+| `abortSignal`    | AbortSignal   | Yes      | Provides a mechanism to abort the request using an `AbortSignal`.|
+
+#### Usage Example
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+
+const ff = new FileforgeClient({
+  apiKey: process.env.FILEFORGE_API_KEY,
+});
+
+try {
+  const docxFile = new File(["Your DOCX content here"], "example.docx", {
+    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  });
+
+  const pdfStream = await ff.fromDocx(
+    docxFile,
+    {
+      options: {
+        variableReplacements: {
+          name: "John Doe"
+        }
+      }
+    },
+    {
+      timeoutInSeconds: 30
+    }
+  );
+
+  console.log("PDF conversion successful. Stream ready.");
+} catch (error) {
+  console.error("Error during PDF conversion:", error);
+}
+```
+
+#### Notes
+
+- To enable variable replacement as Word variables for your account, please contact the FileForge support.
+- Variable replacement is supported with various methods:
+     * Templated litterals: `{{name}}`
+     * Word variables, as listed in the document metadata: `{DOCVARIABLE "name"}`

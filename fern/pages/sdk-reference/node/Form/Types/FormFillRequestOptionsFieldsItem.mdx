@@ -1,0 +1,35 @@
+### `FormFillRequestOptionsFieldsItem` Types
+
+#### PDF Text Field
+
+| Property | Type   | Required | Description                                 |
+|----------|--------|----------|---------------------------------------------|
+| `type`   | string | Yes      | `"PDFTextField"`                            |
+| `value`  | string | Yes      | The value to fill into the text field.      |
+
+OR 
+
+#### PDF CheckBox
+
+| Property | Type    | Required | Description                                 |
+|----------|---------|----------|---------------------------------------------|
+| `type`   | string  | Yes      | `"PDFCheckBox"`                             |
+| `checked`| boolean | Yes      | Indicates whether the checkbox is checked.  |
+
+OR 
+
+#### PDF Option List or Dropdown
+
+| Property  | Type            | Required | Description                                 |
+|-----------|-----------------|----------|---------------------------------------------|
+| `type`    | enum            | Yes      | Allowed values: `"PDFOptionList"`, `"PDFDropdown"` |
+| `selected`| list of strings | Yes      | List of selected options.                   |
+
+OR
+
+#### PDF Radio Group
+
+| Property  | Type   | Required | Description                                 |
+|-----------|--------|----------|---------------------------------------------|
+| `type`    | string | Yes      | `"PDFRadioGroup"`                           |
+| `selected`| string | Yes      | Selected option in the radio group.         |

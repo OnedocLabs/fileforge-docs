@@ -1,0 +1,76 @@
+### `fill` Function Documentation
+
+#### Description
+
+The `fill` function fills form fields in a PDF document based on the provided request options. 
+
+#### Function Signature
+
+```typescript
+public async fill(
+    file: File | fs.ReadStream,
+    request: Fileforge.pdf.FormFillRequest,
+    requestOptions?: Form.RequestOptions
+): Promise<stream.Readable>
+```
+
+#### Parameters
+
+- `file` (`File` | `fs.ReadStream`): The PDF document file to be filled. This can be either a `File` object or a `ReadStream`.
+- `request` (`Fileforge.pdf.FormFillRequest`): Configuration settings for the form filling process, including the data to be filled into the form fields.
+
+| Option  | Type                                              | Description                                 |
+|---------|---------------------------------------------------|---------------------------------------------|
+| `fields`| `Fileforge.pdf.FormFillRequestOptionsFieldsItem[]` | Fields to fill or change in the PDF document. See details on [FormFillRequestOptionsFieldsItem](/sdk-reference/node/pdf/form/types/formFillRequestOptionsFieldsItem)|
+
+
+- `requestOptions` (`Form.RequestOptions` (optional)): Additional settings for the request, such as timeout, retries, and abort signals.
+
+| Option              | Type                   | Default | Description                                                                     |
+|---------------------|------------------------|---------|---------------------------------------------------------------------------------|
+| `timeoutInSeconds`  | number                 | Yes     | Specifies the timeout for the request in seconds.                               |
+| `maxRetries`        | number                 | Yes     | Defines the maximum number of retries for the request.                          |
+| `abortSignal`       | AbortSignal            | Yes     | Provides a mechanism to abort the request using an `AbortSignal`.               |
+
+#### Returns
+
+`Promise<stream.Readable>`: A promise which resolves with the filled PDF as a readable stream if the request is successful.
+
+#### Usage Example
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";
+
+const ff = new FileforgeClient({
+  apiKey: process.env.FILEFORGE_API_KEY,
+});
+
+(async () => {
+  try {
+    const pdfFilePath = "/path/to/your/file.pdf";
+    const pdfFileStream = fs.createReadStream(pdfFilePath);
+
+    const formFillRequest = {
+      options: {
+        fields: {
+          // Specify field names and values to be filled
+          fieldName1: "value1",
+          fieldName2: "value2",
+        }
+      }
+    };
+
+    const requestOptions = {
+      timeoutInSeconds: 60,
+      maxRetries: 3,
+    };
+
+    const filledPdfStream = await ff.pdf.form.fill(pdfFileStream, formFillRequest, requestOptions);
+
+    console.log("PDF form filling successful. Stream ready.");
+  } catch (error) {
+    console.error("Error during PDF form filling:", error);
+  }
+})();
+```

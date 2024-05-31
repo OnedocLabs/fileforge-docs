@@ -1,0 +1,49 @@
+### `Fileforge.pdf.FormDetectResponseItem` Types
+
+#### PDF CheckBox
+
+| Property   | Type    | Optional | Description                                       |
+|------------|---------|----------|---------------------------------------------------|
+| `type`     | string  | No       | `"PDFCheckBox"`                                   |
+| `isChecked`| boolean | Yes      | Indicates whether the checkbox is checked or not. |
+
+OR
+
+#### PDF Dropdown or Option List
+
+| Property       | Type          | Optional | Description                                                                                   |
+|----------------|---------------|----------|-----------------------------------------------------------------------------------------------|
+| `type`         | enum          | No       | Allowed values: `"PDFDropdown"`, `"PDFOptionList"`                                            |
+| `options`      | list of strings| Yes     | List of options available in the dropdown or option list.                                     |
+| `isMultiselect`| boolean       | Yes      | Indicates whether multiple selections are allowed.                                            |
+| `selected`     | list of strings| Yes     | List of selected options.                                                                     |
+| `isEditable`   | boolean       | Yes      | Indicates whether the dropdown or option list is editable.                                    |
+
+OR
+
+#### PDF Radio Group
+
+| Property            | Type          | Optional | Description                                                               |
+|---------------------|---------------|----------|---------------------------------------------------------------------------|
+| `type`              | string        | No       | `"PDFRadioGroup"`                                                         |
+| `options`           | list of strings| Yes     | List of options available in the radio group.                             |
+| `selected`          | string        | Yes      | Selected option in the radio group.                                       |
+| `isMutuallyExclusive`| boolean      | Yes      | Indicates whether the radio group options are mutually exclusive.         |
+| `isOffToggleable`   | boolean       | Yes      | Indicates whether the options can be toggled off once selected.           |
+
+OR
+
+#### PDF TextField
+
+| Property        | Type    | Optional | Description                                                                                 |
+|-----------------|---------|----------|---------------------------------------------------------------------------------------------|
+| `type`          | string  | No       | `"PDFTextField"`                                                                            |
+| `defaultValue`  | string  | Yes      | The default value of the text field.                                                        |
+| `isPassword`    | boolean | Yes      | Indicates whether the text field is for password entry.                                     |
+| `isRichFormatted`| boolean| Yes      | Indicates whether the text field supports rich text formatting.                             |
+| `isScrollable`  | boolean | Yes      | Indicates whether the text field is scrollable.                                             |
+| `isCombed`      | boolean | Yes      | Indicates whether the text field uses comb formatting.                                      |
+| `isMultiline`   | boolean | Yes      | Indicates whether the text field supports multiple lines of text.                           |
+| `isFileSelector`| boolean | Yes      | Indicates whether the text field allows file selection.                                     |
+| `maxLength`     | double  | Yes      | Maximum length of the text field input.                                                     |
+
