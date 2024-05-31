@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Test swagger
-  description: Testing the Fastify swagger API
+  title: FileForge API
+  description: FileForge API for document operations.
   version: 0.1.0
 components:
   securitySchemes:
@@ -41,6 +41,7 @@ paths:
     get:
       operationId: getStatus
       description: Get the status of the API
+      x-fern-availability: generally-available
       responses:
         '200':
           description: Default Response
@@ -168,6 +169,10 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: fromDocx
+      x-fern-availability: beta
       responses:
         '201':
           description: PDF Document generated successfully
@@ -272,7 +277,8 @@ paths:
         - apiKey: []
       x-fern-sdk-group-name:
         - pdf
-      x-fern-sdk-operation-name: generate
+      x-fern-sdk-method-name: generate
+      x-fern-availability: generally-available
       responses:
         '201':
           description: PDF Document generated successfully
@@ -319,6 +325,7 @@ paths:
       operationId: mergePDFDocuments
       tags:
         - PDF
+      description: Merges multiple PDF documents into a single PDF document.
       requestBody:
         content:
           multipart/form-data:
@@ -346,7 +353,8 @@ paths:
         - apiKey: []
       x-fern-sdk-group-name:
         - pdf
-      x-fern-sdk-operation-name: merge
+      x-fern-sdk-method-name: merge
+      x-fern-availability: generally-available
       responses:
         '201':
           description: PDF Document generated successfully
@@ -405,7 +413,8 @@ paths:
       x-fern-sdk-group-name:
         - pdf
         - form
-      x-fern-sdk-operation-name: detect
+      x-fern-sdk-method-name: detect
+      x-fern-availability: beta
       responses:
         '200':
           description: Document fields detected successfully
@@ -570,7 +579,8 @@ paths:
       x-fern-sdk-group-name:
         - pdf
         - form
-      x-fern-sdk-operation-name: mark
+      x-fern-sdk-method-name: mark
+      x-fern-availability: beta
       responses:
         '201':
           description: Marked PDF Document generated successfully
@@ -696,7 +706,8 @@ paths:
       x-fern-sdk-group-name:
         - pdf
         - form
-      x-fern-sdk-operation-name: fill
+      x-fern-sdk-method-name: fill
+      x-fern-availability: beta
       responses:
         '201':
           description: PDF Document filled successfully
