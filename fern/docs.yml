@@ -180,7 +180,6 @@ navigation:
       - api: API Reference
         snippets:
           typescript: '@fileforge/client'
-          python: fileforge
   - tab: SDK
     layout:
       - section: Getting Started
@@ -198,34 +197,36 @@ navigation:
             slug: node-error-handling
           - section: PDF
             contents:
-            - page: fromDocx
-              path: ./pages/sdk-reference/node/PDF/fromDocx.mdx
-              slug: from-docx
-            - page: generate
-              path: ./pages/sdk-reference/node/PDF/generate.mdx
-              slug: generate-from-html
-            - page: merge
-              path: ./pages/sdk-reference/node/PDF/merge.mdx
-              slug: merge
-            - section: Form
-              contents:
-              - page: detect
-                path: ./pages/sdk-reference/node/Form/detect.mdx
-                slug: detect
-              - page: mark
-                path: ./pages/sdk-reference/node/Form/mark.mdx
-                slug: mark
-              - page: fill
-                path: ./pages/sdk-reference/node/Form/fill.mdx
-                slug: fill
-              - section: Types
+              - page: fromDocx
+                path: ./pages/sdk-reference/node/PDF/fromDocx.mdx
+                slug: from-docx
+              - page: generate
+                path: ./pages/sdk-reference/node/PDF/generate.mdx
+                slug: generate-from-html
+              - page: merge
+                path: ./pages/sdk-reference/node/PDF/merge.mdx
+                slug: merge
+              - section: Form
                 contents:
-                - page: FormFillRequestOptionsFieldsItem
-                  path: ./pages/sdk-reference/node/Form/Types/formFillRequestOptionsFieldsItem.mdx
-                  slug: formFillRequestOptionsFieldsItem
-                - page: FormDetectResponseItem
-                  path: ./pages/sdk-reference/node/Form/Types/FormDetectResponseItem.mdx
-                  slug: formDetectResponseItem
+                  - page: detect
+                    path: ./pages/sdk-reference/node/Form/detect.mdx
+                    slug: detect
+                  - page: mark
+                    path: ./pages/sdk-reference/node/Form/mark.mdx
+                    slug: mark
+                  - page: fill
+                    path: ./pages/sdk-reference/node/Form/fill.mdx
+                    slug: fill
+                  - section: Types
+                    contents:
+                      - page: FormFillRequestOptionsFieldsItem
+                        path: >-
+                          ./pages/sdk-reference/node/Form/Types/formFillRequestOptionsFieldsItem.mdx
+                        slug: formFillRequestOptionsFieldsItem
+                      - page: FormDetectResponseItem
+                        path: >-
+                          ./pages/sdk-reference/node/Form/Types/FormDetectResponseItem.mdx
+                        slug: formDetectResponseItem
   - tab: help
     layout:
       - section: HTML to PDF

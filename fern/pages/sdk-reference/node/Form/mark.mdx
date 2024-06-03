@@ -43,25 +43,17 @@ const ff = new FileforgeClient({
 
 (async () => {
   try {
-    const pdfFilePath = "/path/to/your/file.pdf";
-    const pdfFileStream = fs.createReadStream(pdfFilePath);
+    const pdfStream = await ff.pdf.form.mark(
+      new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+        type: "application/pdf",
+      }),
+      { options: {} },
+    );
 
-    const formMarkRequest = {
-      options: {
-        // Add any specific options for form marking here
-      },
-    };
-
-    const requestOptions = {
-      timeoutInSeconds: 60,
-      maxRetries: 3,
-    };
-
-    const markedPdfStream = await ff.pdf.form.mark(pdfFileStream, formMarkRequest, requestOptions);
-
-    console.log("PDF marking successful. Stream ready.");
+    pdfStream.pipe(fs.createWriteStream("./result_mark.pdf"));
   } catch (error) {
-    console.error("Error during PDF marking:", error);
+    console.error("Error during PDF merge:", error);
   }
+
 })();
 ```

@@ -17,7 +17,7 @@ public async fromDocx(
 #### Parameters
 
 - `file` (`File` | `fs.ReadStream`): The Word document file to be converted. This can be either a `File` object or a `ReadStream`.
-- `request`: An object with a key `options` that contains the following **optional** options:
+- `request`: An optional object with a key `options` that contains the following options:
 
 | Option              | Type                   | Default | Description                                                                     |
 |---------------------|------------------------|---------|---------------------------------------------------------------------------------|
@@ -36,36 +36,33 @@ public async fromDocx(
 #### Usage Example
 
 ```typescript
-import { FileforgeClient } from "@fileforge/client";
+const { FileforgeClient } = require("@fileforge/client");
+const fs = require("fs");
 
 const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
 });
 
-try {
-  const docxFile = new File(["Your DOCX content here"], "example.docx", {
-    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  });
+(async () => {
+  try {
+    const docxFile = fs.createReadStream(__dirname + "/document-simple.docx");
+    const pdfStream = await ff.pdf.fromDocx(
+      docxFile,
+      {},
+      {
+        timeoutInSeconds: 30,
+      },
+    );
 
-  const pdfStream = await ff.fromDocx(
-    docxFile,
-    {
-      options: {
-        variableReplacements: {
-          name: "John Doe"
-        }
-      }
-    },
-    {
-      timeoutInSeconds: 30
-    }
-  );
+    pdfStream.pipe(fs.createWriteStream("./result_docx.pdf"));
+    console.log("PDF conversion successful. Stream ready.");
+  } catch (error) {
+    console.error("Error during PDF conversion:", error);
+  }
+})();
 
-  console.log("PDF conversion successful. Stream ready.");
-} catch (error) {
-  console.error("Error during PDF conversion:", error);
-}
 ```
+
 
 #### Notes
 

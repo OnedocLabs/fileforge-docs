@@ -23,29 +23,40 @@ const HTML = `<!DOCTYPE html>
 `
 ```
 
-By setting the `documentInput.host` property to `true`, the Fileforge API will now return a url to your file. 
-You can host your document with Fileforge for up to 7 days. You can set duration in the `documentInput.expiresAt` property.
+By setting the `options.host` property to `true`, the Fileforge API will now return a url to your file. 
+You can host your document with Fileforge for up to 7 days. You can set duration in the `options.expiresAt` property.
 
 ```typescript
-import { FileforgeClient, generateFromHtml, ResponseURL } from "@fileforge/client";
+import { FileforgeClient } from "@fileforge/client";
 
-const client = new FileforgeClient({
-    apiKey: FILEFORGE_API_KEY
+
+const ff = new FileforgeClient({
+  apiKey: process.env.FILEFORGE_API_KEY,
 });
 
-const documentInput = {
-    html: HTML,
-    fileName: 'example',
-    test: true,
-    host: true,
-    // sets the document to be hosted for 24 hours from now
-    expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), 
-};
-
-const pdf = await generateFromHtml(
-    client, 
-    documentInput
-) as ResponseURL; 
-// console.log the url
-console.log(pdf.url);
+(async () => {
+  try {
+    const pdf = await ff.pdf.generate(
+      [
+        new File(
+          [HTML],
+          {
+            type: "text/html",
+          },
+        ),
+      ],
+      {
+        options: {
+          host: true,
+        },
+      },
+      {
+        timeoutInSeconds: 30,
+      },
+    );
+    console.log(pdf.url);
+  } catch (error) {
+    console.error("Error during PDF conversion:", error);
+  }
+})();
 ```

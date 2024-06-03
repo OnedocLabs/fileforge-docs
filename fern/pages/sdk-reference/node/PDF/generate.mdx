@@ -53,16 +53,23 @@ Write your HTML
 const HTML = `<!doctype html><html><body><h1>Hello world</h1></body></html>"`;
 ```
 Render it to PDF
+
 ```typescript
+const { FileforgeClient } = require("@fileforge/client");
+
 import { FileforgeClient } from "@fileforge/client";
 
+
 const ff = new FileforgeClient({
-      apiKey: process.env.FILEFORGE_API_KEY,
-    });
-const document = await ff.pdf.generate(
+  apiKey: process.env.FILEFORGE_API_KEY,
+});
+
+(async () => {
+  try {
+    const pdf = await ff.pdf.generate(
       [
         new File(
-          [HTML],
+          ["<!doctype html><html><body><h1>Hello world</h1></body></html>"],
           "index.html",
           {
             type: "text/html",
@@ -74,7 +81,15 @@ const document = await ff.pdf.generate(
           host: true,
         },
       },
+      {
+        timeoutInSeconds: 30,
+      },
     );
 
-console.log(document.url);
+    console.log(pdf.url);
+  } catch (error) {
+    console.error("Error during PDF conversion:", error);
+  }
+})();
+
 ```

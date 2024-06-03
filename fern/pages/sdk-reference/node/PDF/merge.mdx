@@ -34,35 +34,34 @@ public async merge(
 
 ```typescript
 import { FileforgeClient } from "@fileforge/client";
+const fs = require("fs");
 
 const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
 });
 
-try {
-  const pdfFiles = [
-    new File(["PDF content here"], "document1.pdf", {
-      type: "application/pdf",
-    }),
-    new File(["PDF content here"], "document2.pdf", {
-      type: "application/pdf",
-    }),
-  ];
-
-  const mergedPdfStream = await ff.pdf.merge(
-    pdfFiles,
-    {
-      options: {
-        // Specify merge options if any
+(async () => {
+  try {
+    const pdfFiles = [
+      fs.createReadStream(__dirname + "/pdf1.pdf"),
+      fs.createReadStream(__dirname + "/pdf2.pdf"),
+    ];
+    const mergedPdfStream = await ff.pdf.merge(
+      pdfFiles,
+      {
+        options: {
+          // Specify merge options if any
+        },
       },
-    },
-    {
-      timeoutInSeconds: 60
-    }
-  );
+      {
+        timeoutInSeconds: 60,
+      },
+    );
+    mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
+    console.log("PDF merge successful. Stream ready.");
+  } catch (error) {
+    console.error("Error during PDF merge:", error);
+  }
+})();
 
-  console.log("PDF merge successful. Stream ready.");
-} catch (error) {
-  console.error("Error during PDF merge:", error);
-}
 ```

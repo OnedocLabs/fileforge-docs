@@ -48,17 +48,17 @@ const ff = new FileforgeClient({
 
 (async () => {
   try {
-    const pdfFilePath = "/path/to/your/file.pdf";
-    const pdfFileStream = fs.createReadStream(pdfFilePath);
 
     const formFillRequest = {
-      options: {
+      options: [
+      {
         fields: {
           // Specify field names and values to be filled
           fieldName1: "value1",
           fieldName2: "value2",
         }
       }
+      ],
     };
 
     const requestOptions = {
@@ -66,8 +66,13 @@ const ff = new FileforgeClient({
       maxRetries: 3,
     };
 
-    const filledPdfStream = await ff.pdf.form.fill(pdfFileStream, formFillRequest, requestOptions);
-
+    const filledPdfStream = await ff.pdf.form.fill([
+      new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+        type: "application/pdf",
+      }),
+    ], formFillRequest, requestOptions);
+        
+    filledPdfStream.pipe(fs.createWriteStream("./result_filled.pdf"));
     console.log("PDF form filling successful. Stream ready.");
   } catch (error) {
     console.error("Error during PDF form filling:", error);

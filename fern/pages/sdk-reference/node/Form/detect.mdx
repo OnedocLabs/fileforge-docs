@@ -33,8 +33,9 @@ public async detect(
 #### Usage Example
 
 ```typescript
-import { FileforgeClient } from "@fileforge/client";
-import * as fs from "fs";
+const { FileforgeClient } = require("@fileforge/client");
+const fs = require("fs");
+
 
 const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
@@ -42,25 +43,16 @@ const ff = new FileforgeClient({
 
 (async () => {
   try {
-    const pdfFilePath = "/path/to/your/file.pdf";
-    const pdfFileStream = fs.createReadStream(pdfFilePath);
+    const resultObject = await ff.pdf.form.detect(
+      new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+        type: "application/pdf",
+      }),
+      { options: {} },
+    );
 
-    const formDetectRequest = {
-      options: {
-        // Add any specific options for form detection here
-      },
-    };
-
-    const requestOptions = {
-      timeoutInSeconds: 60,
-      maxRetries: 3,
-    };
-
-    const detectedFormFields = await ff.pdf.form.detect(pdfFileStream, formDetectRequest, requestOptions);
-
-    console.log("Detected form fields:", detectedFormFields);
+    console.log(resultObject);
   } catch (error) {
-    console.error("Error during form detection:", error);
+    console.error("Error during PDF merge:", error);
   }
 })();
 ```

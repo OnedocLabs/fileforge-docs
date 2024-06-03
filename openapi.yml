@@ -5,9 +5,6 @@ info:
   version: 0.1.0
 components:
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
     apiKey:
       type: apiKey
       name: X-API-Key
@@ -97,7 +94,6 @@ paths:
               type: object
               required:
                 - file
-                - options
               properties:
                 options:
                   description: >-
@@ -207,7 +203,6 @@ paths:
               type: object
               required:
                 - files
-                - options
               properties:
                 options:
                   description: Conversion options. This field is required even if empty.
@@ -324,7 +319,6 @@ paths:
               type: object
               required:
                 - files
-                - options
               properties:
                 options:
                   type: object
@@ -610,7 +604,6 @@ paths:
               type: object
               required:
                 - file
-                - options
               properties:
                 options:
                   type: object
