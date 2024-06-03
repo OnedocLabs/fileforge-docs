@@ -1,5 +1,6 @@
 instances:
   - url: 'https://fileforge.docs.buildwithfern.com'
+    custom-domain: 'https://docs.fileforge.com'
 title: Fileforge
 tabs:
   welcome:
