@@ -36,8 +36,8 @@ public async fromDocx(
 #### Usage Example
 
 ```typescript
-const { FileforgeClient } = require("@fileforge/client");
-const fs = require("fs");
+import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";
 
 const ff = new FileforgeClient({
   apiKey: process.env.FILEFORGE_API_KEY,
