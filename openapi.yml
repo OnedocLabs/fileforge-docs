@@ -98,7 +98,6 @@ paths:
               type: object
               required:
                 - file
-                - options
               properties:
                 options:
                   description: >-
@@ -211,7 +210,6 @@ paths:
               type: object
               required:
                 - files
-                - options
               properties:
                 options:
                   description: Conversion options. This field is required even if empty.
@@ -333,7 +331,6 @@ paths:
               type: object
               required:
                 - files
-                - options
               properties:
                 options:
                   type: object
@@ -622,7 +619,6 @@ paths:
               type: object
               required:
                 - file
-                - options
               properties:
                 options:
                   type: object
@@ -634,24 +630,21 @@ paths:
                       description: Fields to fill or change in the PDF document.
                       items:
                         type: object
-                        required:
-                          - name
-                          - type
-                        properties:
-                          name:
-                            description: >-
-                              Name of the field to fill. This must match an
-                              exact name from the PDF document. To detect all
-                              fields, use the /pdf/form/fields endpoint, or use
-                              the /pdf/form/mark endpoint to get an annotated
-                              PDF with each detected field.
-                            type: string
                         anyOf:
                           - type: object
                             required:
+                              - name
                               - type
                               - value
                             properties:
+                              name:
+                                description: >-
+                                  Name of the field to fill. This must match an
+                                  exact name from the PDF document. To detect
+                                  all fields, use the /pdf/form/fields endpoint,
+                                  or use the /pdf/form/mark endpoint to get an
+                                  annotated PDF with each detected field.
+                                type: string
                               type:
                                 type: string
                                 enum:
@@ -660,9 +653,18 @@ paths:
                                 type: string
                           - type: object
                             required:
+                              - name
                               - type
                               - checked
                             properties:
+                              name:
+                                description: >-
+                                  Name of the field to fill. This must match an
+                                  exact name from the PDF document. To detect
+                                  all fields, use the /pdf/form/fields endpoint,
+                                  or use the /pdf/form/mark endpoint to get an
+                                  annotated PDF with each detected field.
+                                type: string
                               type:
                                 type: string
                                 enum:
@@ -671,9 +673,18 @@ paths:
                                 type: boolean
                           - type: object
                             required:
+                              - name
                               - type
                               - selected
                             properties:
+                              name:
+                                description: >-
+                                  Name of the field to fill. This must match an
+                                  exact name from the PDF document. To detect
+                                  all fields, use the /pdf/form/fields endpoint,
+                                  or use the /pdf/form/mark endpoint to get an
+                                  annotated PDF with each detected field.
+                                type: string
                               type:
                                 type: string
                                 enum:
@@ -685,9 +696,18 @@ paths:
                                   type: string
                           - type: object
                             required:
+                              - name
                               - type
                               - selected
                             properties:
+                              name:
+                                description: >-
+                                  Name of the field to fill. This must match an
+                                  exact name from the PDF document. To detect
+                                  all fields, use the /pdf/form/fields endpoint,
+                                  or use the /pdf/form/mark endpoint to get an
+                                  annotated PDF with each detected field.
+                                type: string
                               type:
                                 type: string
                                 enum:
