@@ -1,4 +1,4 @@
-This documentation provides an example of how to use the FileForgeClient to generate a PDF file from HTML with CSS, and SVG files aside.
+This documentation provides an example of how to use the FileforgeClient to generate a PDF file from HTML with CSS, and SVG files aside.
 
 #### Prerequisites
 
@@ -23,7 +23,7 @@ const HTML_W_IMAGE = `<!DOCTYPE html>
     </head>
     <body>
         <h1>Hello World!</h1>
-        <img src="logo-black.svg" alt="FileForge logo" />
+        <img src="logo-black.svg" alt="Fileforge logo" />
     </body>
 </html>
 `
@@ -46,7 +46,7 @@ The css and svg are passed to the Fileforge API in `documentInput.files`.
 ```typescript
 import { generate_from_html, ResponseStream } from "@fileforge/client";
 
-const ff = new FileForgeClient({
+const ff = new FileforgeClient({
     apiKey: FILEFORGE_API_KEY
 });
 

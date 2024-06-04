@@ -76,7 +76,7 @@ paths:
 
 
         To enable variable replacement as Word variables for your account,
-        please contact the FileForge support.
+        please contact the Fileforge support.
       requestBody:
         content:
           multipart/form-data:
@@ -208,7 +208,7 @@ paths:
                     host:
                       type: boolean
                       description: >-
-                        If enabled, the document will be hosted by FileForge and
+                        If enabled, the document will be hosted by Fileforge and
                         a presigned URL will be returned.
                       default: false
                     expiresAt:

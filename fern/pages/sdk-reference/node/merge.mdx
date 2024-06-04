@@ -2,27 +2,27 @@
 
 #### Description
 
-The `merge` function merges multiple PDF files into a single PDF document. This function sends a request to the FileForge API with the provided files and request options and returns a response containing either a URL to the merged PDF or a stream of the merged PDF file.
+The `merge` function merges multiple PDF files into a single PDF document. This function sends a request to the Fileforge API with the provided files and request options and returns a response containing either a URL to the merged PDF or a stream of the merged PDF file.
 
 #### Function Signature
 
 ```typescript
 async merge(
     files: File[] | fs.ReadStream[],
-    request: FileForge.MergeRequest,
-    requestOptions?: FileForgeClient.RequestOptions
+    request: Fileforge.MergeRequest,
+    requestOptions?: FileforgeClient.RequestOptions
 ): Promise<ResponseObject | any>
 ```
 
 #### Parameters
 
 - `files: File[] | fs.ReadStream[]`: An array of files to be merged. These can be either `File` objects or `fs.ReadStream` objects.
-- `request: FileForge.MergeRequest`: An object containing the merge request detail as such `{options?:{};}`
-- `requestOptions?: FileForgeClient.RequestOptions`: Optional. An object containing additional request options such as timeout and retry settings as such `{timeoutInSeconds?: number;maxRetries?: number;}`
+- `request: Fileforge.MergeRequest`: An object containing the merge request detail as such `{options?:{};}`
+- `requestOptions?: FileforgeClient.RequestOptions`: Optional. An object containing additional request options such as timeout and retry settings as such `{timeoutInSeconds?: number;maxRetries?: number;}`
 
 #### Returns
 
-`Promise<ResponseObject | any>`: A promise that resolves to a `ResponseObject` or another response type, depending on the FileForge API response. The `ResponseObject` can be:
+`Promise<ResponseObject | any>`: A promise that resolves to a `ResponseObject` or another response type, depending on the Fileforge API response. The `ResponseObject` can be:
 - `ResponseURL`: An object containing the URL to the merged PDF.
   - `url: string`: The URL to access the merged PDF.
 - `ResponseStream`: An object containing a readable stream of the merged PDF file.
@@ -43,7 +43,7 @@ const pdfBlob2 = new Blob([PDF2], {
 const file1 = new File([pdfBlob1], "pdf1.pdf", { type: "application/pdf" });
 const file2 = new File([pdfBlob2], "pdf2.pdf", { type: "application/pdf" });
 
-const ff = new FileForgeClient({
+const ff = new FileforgeClient({
     apiKey: FILEFORGE_API_KEY
 });
 

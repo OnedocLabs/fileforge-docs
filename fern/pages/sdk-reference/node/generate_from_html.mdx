@@ -8,19 +8,19 @@ The `generate_from_html` function generates a PDF document from web assets (HTML
 
 ```typescript
 async function generate_from_html(
-    client: FileForgeClient,
+    client: FileforgeClient,
     document: DocumentInput
 ): Promise<ResponseObject>
 ```
 
 #### Parameters
 
-- `client: FileForgeClient`: An instance of the `FileForgeClient` used to communicate with the FileForge API.
+- `client: FileforgeClient`: An instance of the `FileforgeClient` used to communicate with the Fileforge API.
 - `document: DocumentInput`: An object containing the HTML content and optional additional assets for generating the PDF. This object includes the following properties:
   - `html: string`: The HTML content to be converted into a PDF.
   - `fileName?: string`: Optional. The name of the generated PDF file. Defaults to document. The file name should not contain extensions nor path traversals.
   - `test?: boolean`: Optional. Generate a test document instead of a production document. **The test document will contain a watermark and will not be charged.** Defaults to `true`.
-  - `host?: boolean`: Optional. If enabled, the document will be hosted by FileForge and a presigned URL will be returned. Defaults to `false`.
+  - `host?: boolean`: Optional. If enabled, the document will be hosted by Fileforge and a presigned URL will be returned. Defaults to `false`.
   - `expiresAt?: Date`: Optional. If host is enabled, the expiration date of the presigned URL. Defaults to `7 days` from now. Cannot exceed `7 days` from now.
   - `files?: AssetOrPathBuffer[]`: Optional. An array of additional assets (e.g., CSS, images) required for generating the PDF. This is either a list of `{path: string; content: string;}` or `{path: string; content: Buffer;}`
 
@@ -54,7 +54,7 @@ Render it to PDF
 ```typescript
 import { generate_from_html, ResponseStream } from "@fileforge/client";
 
-const client = new FileForgeClient({
+const client = new FileforgeClient({
     apiKey: FILEFORGE_API_KEY
 });
 
