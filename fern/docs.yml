@@ -221,11 +221,11 @@ navigation:
                     contents:
                       - page: FormFillRequestOptionsFieldsItem
                         path: >-
-                          ./pages/sdk-reference/node/Form/Types/FormFillRequestOptionsFieldsItem.mdx
-                        slug: FormFillRequestOptionsFieldsItem
+                          ./pages/sdk-reference/node/Form/Types/formfillrequestoptionsfieldsitem.mdx
+                        slug: formFillRequestOptionsFieldsItem
                       - page: FormDetectResponseItem
                         path: >-
-                          ./pages/sdk-reference/node/Form/Types/FormDetectResponseItem.mdx
+                          ./pages/sdk-reference/node/Form/Types/formdetectresponseitem.mdx
                         slug: formDetectResponseItem
   - tab: help
     layout:
