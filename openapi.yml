@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
-  title: Test swagger
-  description: Testing the Fastify swagger API
+  title: FileForge API
+  description: FileForge API for document operations.
   version: 0.1.0
 components:
   securitySchemes:
@@ -28,19 +28,29 @@ components:
           example: BAD_REQUEST
         message:
           type: string
-          description: >-
-            A human-readable message. This field may also provide additional
+          description: A human-readable message. This field may also provide additional
             context to the error code.
           example: Bad request
       title: ErrorSchema
 paths:
   /status/:
     get:
+      operationId: getStatus
+      description: Get the status of the API
+      x-fern-availability: generally-available
       responses:
-        '200':
+        "200":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
   /pdf/docx/:
     post:
+      operationId: convertDOCXtoPDF
       summary: Converts a DOC or DOCX document to PDF.
       tags:
         - PDF
@@ -84,7 +94,6 @@ paths:
               type: object
               required:
                 - file
-                - options
               properties:
                 options:
                   description: >-
@@ -132,17 +141,18 @@ paths:
                     document, nor if variables found in the document are not in
                     the options.
                   type: object
-                  required: []
                   properties:
+                    keepOriginalStyles:
+                      type: boolean
+                      description: Whether to keep the text formatting of the variables in the
+                        document. Default is true.
                     templateLiterals:
                       type: object
                       description: Map of template literals to replace in the document.
                       additionalProperties:
                         type: string
                 file:
-                  description: >-
-                    The Microsoft Word document (.DOCX or .DOC) file to convert
-                    to PDF.
+                  description: The Microsoft Word document (.DOCX or .DOC) file to convert to PDF.
                   type: string
                   format: binary
             encoding:
@@ -151,39 +161,41 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: fromDocx
+      x-fern-availability: beta
       responses:
-        '201':
+        "201":
           description: PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
-        '400':
+        "400":
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: '#/components/schemas/def-0'
-        '401':
+                $ref: "#/components/schemas/def-0"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: '#/components/schemas/def-0'
-        '500':
+                $ref: "#/components/schemas/def-0"
+        "500":
           description: Internal server error
   /pdf/generate/:
     post:
+      operationId: generatePDFDocument
       summary: Generates a PDF document from HTML and web technologies.
       tags:
         - PDF
-      description: |+
-        Generates a PDF document from web assets.
-
+      description: Generates a PDF document from web assets.
       requestBody:
         content:
           multipart/form-data:
@@ -191,39 +203,32 @@ paths:
               type: object
               required:
                 - files
-                - options
               properties:
                 options:
                   description: Conversion options. This field is required even if empty.
                   type: object
-                  required: []
                   properties:
                     test:
                       type: boolean
-                      description: >-
-                        Generate a test document instead of a production
-                        document. The generated document will contain a
-                        watermark. Defaults to true.
+                      description: Generate a test document instead of a production document. The
+                        generated document will contain a watermark. Defaults to
+                        true.
                       default: true
                     host:
                       type: boolean
-                      description: >-
-                        If enabled, the document will be hosted by FileForge and
-                        a presigned URL will be returned.
+                      description: If enabled, the document will be hosted by FileForge and a
+                        presigned URL will be returned.
                       default: false
                     expiresAt:
                       type: string
                       format: date-time
-                      description: >-
-                        If host is enabled, the expiration date of the presigned
-                        URL. Defaults to 7 days from now. Cannot exceed 7 days
-                        from now.
+                      description: If host is enabled, the expiration date of the presigned URL.
+                        Defaults to 7 days from now. Cannot exceed 7 days from
+                        now.
                     fileName:
                       type: string
-                      description: >-
-                        The name of the generated PDF file. Defaults to
-                        document. The file name should not contain extensions
-                        nor path traversals.
+                      description: The name of the generated PDF file. Defaults to document. The file
+                        name should not contain extensions nor path traversals.
                       default: document
                 files:
                   description: >-
@@ -256,12 +261,15 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: generate
+      x-fern-availability: generally-available
       responses:
-        '201':
+        "201":
           description: PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
@@ -275,33 +283,35 @@ paths:
                     type: string
                     format: uri
                     description: URL to the generated PDF document
-        '400':
+        "400":
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: '#/components/schemas/def-0'
-        '401':
+                $ref: "#/components/schemas/def-0"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: '#/components/schemas/def-0'
-        '500':
+                $ref: "#/components/schemas/def-0"
+        "500":
           description: Internal server error
-        '502':
+        "502":
           description: Bad Gateway
           content:
             application/json:
               schema:
                 description: Bad Gateway
-                $ref: '#/components/schemas/def-0'
+                $ref: "#/components/schemas/def-0"
   /pdf/merge/:
     post:
+      operationId: mergePDFDocuments
       tags:
         - PDF
+      description: Merges multiple PDF documents into a single PDF document.
       requestBody:
         content:
           multipart/form-data:
@@ -309,11 +319,9 @@ paths:
               type: object
               required:
                 - files
-                - options
               properties:
                 options:
                   type: object
-                  required: []
                   properties: {}
                 files:
                   allOf:
@@ -328,33 +336,410 @@ paths:
         required: true
       security:
         - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: merge
+      x-fern-availability: generally-available
       responses:
-        '201':
+        "201":
           description: PDF Document generated successfully
           content:
             application/pdf:
-              description: PDF Document
               schema:
                 type: string
                 format: binary
-        '400':
+        "400":
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: '#/components/schemas/def-0'
-        '401':
+                $ref: "#/components/schemas/def-0"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: '#/components/schemas/def-0'
-        '500':
+                $ref: "#/components/schemas/def-0"
+        "500":
+          description: Internal server error
+  /pdf/form/detect/:
+    post:
+      operationId: detectPDFFormFields
+      summary: Detect form fields in a PDF document
+      tags:
+        - PDF
+        - form
+      description: Returns a list of form fields detected in the PDF document, along
+        with their location, options and requirements. For a more visual
+        representation, use the /pdf/form/mark endpoint.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                options:
+                  type: object
+                  properties: {}
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+        - form
+      x-fern-sdk-method-name: detect
+      x-fern-availability: beta
+      responses:
+        "200":
+          description: Document fields detected successfully
+          content:
+            application/json:
+              schema:
+                description: Document fields detected successfully
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    required:
+                      type: boolean
+                    readOnly:
+                      type: boolean
+                    locations:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          x:
+                            type: number
+                          y:
+                            type: number
+                          width:
+                            type: number
+                          height:
+                            type: number
+                        required:
+                          - x
+                          - y
+                          - width
+                          - height
+                  required:
+                    - name
+                    - type
+                    - required
+                    - readOnly
+                    - locations
+                  anyOf:
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFCheckBox
+                        isChecked:
+                          type: boolean
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFDropdown
+                            - PDFOptionList
+                        options:
+                          type: array
+                          items:
+                            type: string
+                        isMultiselect:
+                          type: boolean
+                        selected:
+                          type: array
+                          items:
+                            type: string
+                        isEditable:
+                          type: boolean
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFRadioGroup
+                        options:
+                          type: array
+                          items:
+                            type: string
+                        selected:
+                          type: string
+                        isMutuallyExclusive:
+                          type: boolean
+                        isOffToggleable:
+                          type: boolean
+                      required:
+                        - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFTextField
+                        defaultValue:
+                          type: string
+                        isPassword:
+                          type: boolean
+                        isRichFormatted:
+                          type: boolean
+                        isScrollable:
+                          type: boolean
+                        isCombed:
+                          type: boolean
+                        isMultiline:
+                          type: boolean
+                        isFileSelector:
+                          type: boolean
+                        maxLength:
+                          type: number
+                      required:
+                        - type
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: "#/components/schemas/def-0"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: "#/components/schemas/def-0"
+        "500":
+          description: Internal server error
+  /pdf/form/mark/:
+    post:
+      operationId: markPDFFormFields
+      summary: Mark form fields in a PDF document
+      tags:
+        - PDF
+        - form
+      description: Returns a modified PDF document with form fields marked with a
+        green border, and hover text showing the field name.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                options:
+                  type: object
+                  properties: {}
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+        - form
+      x-fern-sdk-method-name: mark
+      x-fern-availability: beta
+      responses:
+        "201":
+          description: Marked PDF Document generated successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: "#/components/schemas/def-0"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: "#/components/schemas/def-0"
+        "500":
+          description: Internal server error
+  /pdf/form/fill/:
+    post:
+      operationId: fillPDFFormFields
+      summary: Fill form fields in a PDF document
+      tags:
+        - PDF
+        - form
+      description: Returns a modified PDF document with filled form fields. A subset
+        of fields can be filled.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                options:
+                  type: object
+                  required:
+                    - fields
+                  properties:
+                    fields:
+                      type: array
+                      description: Fields to fill or change in the PDF document.
+                      items:
+                        type: object
+                        anyOf:
+                          - type: object
+                            required:
+                              - name
+                              - type
+                              - value
+                            properties:
+                              name:
+                                description: Name of the field to fill. This must match an exact name from the
+                                  PDF document. To detect all fields, use the
+                                  /pdf/form/fields endpoint, or use the
+                                  /pdf/form/mark endpoint to get an annotated
+                                  PDF with each detected field.
+                                type: string
+                              type:
+                                type: string
+                                enum:
+                                  - PDFTextField
+                              value:
+                                type: string
+                          - type: object
+                            required:
+                              - name
+                              - type
+                              - checked
+                            properties:
+                              name:
+                                description: Name of the field to fill. This must match an exact name from the
+                                  PDF document. To detect all fields, use the
+                                  /pdf/form/fields endpoint, or use the
+                                  /pdf/form/mark endpoint to get an annotated
+                                  PDF with each detected field.
+                                type: string
+                              type:
+                                type: string
+                                enum:
+                                  - PDFCheckBox
+                              checked:
+                                type: boolean
+                          - type: object
+                            required:
+                              - name
+                              - type
+                              - selected
+                            properties:
+                              name:
+                                description: Name of the field to fill. This must match an exact name from the
+                                  PDF document. To detect all fields, use the
+                                  /pdf/form/fields endpoint, or use the
+                                  /pdf/form/mark endpoint to get an annotated
+                                  PDF with each detected field.
+                                type: string
+                              type:
+                                type: string
+                                enum:
+                                  - PDFOptionList
+                                  - PDFDropdown
+                              selected:
+                                type: array
+                                items:
+                                  type: string
+                          - type: object
+                            required:
+                              - name
+                              - type
+                              - selected
+                            properties:
+                              name:
+                                description: Name of the field to fill. This must match an exact name from the
+                                  PDF document. To detect all fields, use the
+                                  /pdf/form/fields endpoint, or use the
+                                  /pdf/form/mark endpoint to get an annotated
+                                  PDF with each detected field.
+                                type: string
+                              type:
+                                type: string
+                                enum:
+                                  - PDFRadioGroup
+                              selected:
+                                type: string
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+        - form
+      x-fern-sdk-method-name: fill
+      x-fern-availability: beta
+      responses:
+        "201":
+          description: PDF Document filled successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: "#/components/schemas/def-0"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: "#/components/schemas/def-0"
+        "500":
           description: Internal server error
 servers:
   - url: https://api.fileforge.com
     description: Tunnel server
   - url: http://localhost:3000
     description: Development server
+tags:
+  - name: PDF
+    description: PDF operations
+  - name: form
+    description: PDF form operations
