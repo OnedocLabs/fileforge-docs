@@ -188,7 +188,7 @@ navigation:
             slug: authentication
       - api: API Reference
         snippets:
-          typescript: '@fileforge/client'
+          typescript: "@fileforge/client"
   - tab: SDK
     layout:
       - section: Getting Started
@@ -196,7 +196,8 @@ navigation:
           - page: Getting Started
             path: ./pages/sdk-reference/introduction.mdx
             slug: sdk-reference
-      - section: Node
+      - section: JS/Node
+        slug: node
         contents:
           - page: Getting Started
             path: ./pages/sdk-reference/node/introduction.mdx
@@ -204,6 +205,9 @@ navigation:
           - page: Error Handling
             path: ./pages/sdk-reference/node/errors.mdx
             slug: node-error-handling
+          - page: Working with Files
+            path: ./pages/sdk-reference/node/working-with-files.mdx
+            slug: node-working-with-files
           - section: PDF
             contents:
               - page: fromDocx
@@ -251,10 +255,10 @@ navigation:
             path: ./pages/help_center/html_to_pdf/generate-hosted-pdf-from-html.mdx
             slug: generate-hosted-pdf
 colors:
-  accentPrimary: '#AD8AFF'
+  accentPrimary: "#AD8AFF"
   background:
-    dark: '#000000'
-    light: '#ffffff'
+    dark: "#000000"
+    light: "#ffffff"
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg
