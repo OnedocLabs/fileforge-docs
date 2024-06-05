@@ -2,7 +2,7 @@
 
 #### Description
 
-The `fill` function fills form fields in a PDF document based on the provided request options. 
+The `fill` function fills form fields in a PDF document based on the provided request options.
 
 #### Function Signature
 
@@ -19,18 +19,17 @@ public async fill(
 - `file` (`File` | `fs.ReadStream`): The PDF document file to be filled. This can be either a `File` object or a `ReadStream`.
 - `request` (`Fileforge.pdf.FormFillRequest`): Configuration settings for the form filling process, including the data to be filled into the form fields.
 
-| Option  | Type                                              | Description                                 |
-|---------|---------------------------------------------------|---------------------------------------------|
-| `fields`| `Fileforge.pdf.FormFillRequestOptionsFieldsItem[]` | Fields to fill or change in the PDF document. See details on [FormFillRequestOptionsFieldsItem](/sdk-reference/node/pdf/form/types/formFillRequestOptionsFieldsItem)|
-
+| Option   | Type                                               | Description                                                                                                                                                          |
+| -------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fields` | `Fileforge.pdf.FormFillRequestOptionsFieldsItem[]` | Fields to fill or change in the PDF document. See details on [FormFillRequestOptionsFieldsItem](/sdk-reference/node/pdf/form/types/FormFillRequestOptionsFieldsItem) |
 
 - `requestOptions` (`Form.RequestOptions` (optional)): Additional settings for the request, such as timeout, retries, and abort signals.
 
-| Option              | Type                   | Default | Description                                                                     |
-|---------------------|------------------------|---------|---------------------------------------------------------------------------------|
-| `timeoutInSeconds`  | number                 | Yes     | Specifies the timeout for the request in seconds.                               |
-| `maxRetries`        | number                 | Yes     | Defines the maximum number of retries for the request.                          |
-| `abortSignal`       | AbortSignal            | Yes     | Provides a mechanism to abort the request using an `AbortSignal`.               |
+| Option             | Type        | Default | Description                                                       |
+| ------------------ | ----------- | ------- | ----------------------------------------------------------------- |
+| `timeoutInSeconds` | number      | Yes     | Specifies the timeout for the request in seconds.                 |
+| `maxRetries`       | number      | Yes     | Defines the maximum number of retries for the request.            |
+| `abortSignal`      | AbortSignal | Yes     | Provides a mechanism to abort the request using an `AbortSignal`. |
 
 #### Returns
 
@@ -68,7 +67,7 @@ const ff = new FileforgeClient({
         type: "application/pdf",
       }),
       formFillRequest,
-      requestOptions,
+      requestOptions
     );
 
     filledPdfStream.pipe(fs.createWriteStream("./result_filled.pdf"));
