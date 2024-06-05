@@ -38,6 +38,15 @@ paths:
       operationId: getStatus
       description: Get the status of the API
       x-fern-availability: generally-available
+      x-fern-examples: 
+        - response: 
+            status: live
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileForgeClient } from "@fileforge/sdk";
+
+              client.getStatus();
       responses:
         "200":
           description: Default Response
