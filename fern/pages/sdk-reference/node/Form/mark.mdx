@@ -1,0 +1,59 @@
+### `mark` Function Documentation
+
+#### Description
+
+The `mark` function returns a modified PDF document with form fields marked with a green border and hover text showing the field name.
+
+#### Function Signature
+
+```typescript
+public async mark(
+    file: File | fs.ReadStream,
+    request: Fileforge.pdf.FormMarkRequest,
+    requestOptions?: Form.RequestOptions
+): Promise<stream.Readable>
+```
+
+#### Parameters
+
+- `file` (`File` | `fs.ReadStream`): The PDF document file to be marked. This can be either a `File` object or a `ReadStream`.
+- `request`: An object with an `options` key that contains an empty object `{}` for now. This object is reserved for future use.
+- `requestOptions` (optional): Additional settings for the request, such as timeout, retries, and abort signals.
+
+| Option              | Type                   | Default | Description                                                                     |
+|---------------------|------------------------|---------|---------------------------------------------------------------------------------|
+| `timeoutInSeconds`  | number                 | Yes     | Specifies the timeout for the request in seconds.                               |
+| `maxRetries`        | number                 | Yes     | Defines the maximum number of retries for the request.                          |
+| `abortSignal`       | AbortSignal            | Yes     | Provides a mechanism to abort the request using an `AbortSignal`.               |
+
+#### Returns
+
+`Promise<stream.Readable>`: A promise which resolves with the marked PDF as a readable stream if the request is successful.
+
+
+#### Usage Example
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";
+
+const ff = new FileforgeClient({
+  apiKey: process.env.FILEFORGE_API_KEY,
+});
+
+(async () => {
+  try {
+    const pdfStream = await ff.pdf.form.mark(
+      new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+        type: "application/pdf",
+      }),
+      { options: {} },
+    );
+
+    pdfStream.pipe(fs.createWriteStream("./result_mark.pdf"));
+  } catch (error) {
+    console.error("Error during PDF merge:", error);
+  }
+
+})();
+```

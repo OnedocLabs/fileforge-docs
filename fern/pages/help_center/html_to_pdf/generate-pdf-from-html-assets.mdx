@@ -4,9 +4,8 @@ This documentation provides an example of how to use the FileForgeClient to gene
 
 Ensure you have the following:
 
-- An API key for Fileforge as FILEFORGE_API_KEY.
+- An API key for Fileforge as an environment variable: process.env.FILEFORGE_API_KEY
 - Node.js and npm installed.
-- The `fs` module for writing the output PDF file.
 
 #### Example Code
 
@@ -44,28 +43,39 @@ The HTML is rendered to PDF as shown below.
 The css and svg are passed to the Fileforge API in `documentInput.files`.
 
 ```typescript
-import { generate_from_html, ResponseStream } from "@fileforge/client";
+import { FileforgeClient } from "@fileforge/client";
 
-const ff = new FileForgeClient({
-    apiKey: FILEFORGE_API_KEY
+const ff = new FileforgeClient({
+    apiKey: process.env.FILEFORGE_API_KEY
 });
 
-const documentInput = {
-    html: HTML_W_IMAGE,
-    fileName: 'example',
-    test: true,
-    files: [
-        { path: 'style.css', content: CSS },
-        { path: 'logo-black.svg', content: SVG_LOGO }
-    ],
-};
-
-const pdf = await generate_from_html(
-    ff, 
-    documentInput
-) as ResponseStream; 
-
-// Write the PDF stream to a file
-const writeStream = fs.createWriteStream('output_svg_helper.pdf');
-pdf.file.pipe(writeStream);
+(async () => {
+  try {
+    const pdf = await ff.pdf.generate(
+      [
+        new File([HTML_W_IMAGE], "index.html", {
+          type: "text/html",
+        }),
+        new File([SVG_LOGO], "logo-black.svg", {
+          type: "image/svg+xml",
+        }),
+        new File([CSS], "style.css", {
+          type: "text/css",
+        }),
+      ],
+      {
+        options: {
+          host: true,
+          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        },
+      },
+      {
+        timeoutInSeconds: 30,
+      },
+    );
+    console.log(pdf.url);
+  } catch (error) {
+    console.error("Error during PDF conversion:", error);
+  }
+})();
 ```

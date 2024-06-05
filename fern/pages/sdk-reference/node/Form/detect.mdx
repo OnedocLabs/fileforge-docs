@@ -1,0 +1,57 @@
+### `detect` Function Documentation
+
+#### Description
+
+The `detect` function returns a list of form fields detected in a PDF document, along with their location, options, and requirements.
+
+#### Function Signature
+
+```typescript
+public async detect(
+    file: File | fs.ReadStream,
+    request: Fileforge.pdf.FormDetectRequest,
+    requestOptions?: Form.RequestOptions
+): Promise<Fileforge.pdf.FormDetectResponseItem[]>
+```
+
+#### Parameters
+
+- `file` (`File` | `fs.ReadStream`): The PDF document file to be analyzed. This can be either a `File` object or a `ReadStream`.
+- `request`: An object with an `options` key that contains an empty object `{}` for now. This object is reserved for future use.
+- `requestOptions` (optional): Additional settings for the request, such as timeout, retries, and abort signals.
+
+| Option              | Type                   | Default | Description                                                                     |
+|---------------------|------------------------|---------|---------------------------------------------------------------------------------|
+| `timeoutInSeconds`  | number                 | Yes     | Specifies the timeout for the request in seconds.                               |
+| `maxRetries`        | number                 | Yes     | Defines the maximum number of retries for the request.                          |
+| `abortSignal`       | AbortSignal            | Yes     | Provides a mechanism to abort the request using an `AbortSignal`.               |
+
+#### Returns
+
+`Promise<Fileforge.pdf.FormDetectResponseItem[]>`: A promise which resolves with an array of detected form fields, each containing details about the field's location, options, and requirements. See details on [FormDetectResponseItem](/sdk-reference/node/pdf/form/types/formDetectResponseItem).
+
+#### Usage Example
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";
+
+const ff = new FileforgeClient({
+  apiKey: process.env.FILEFORGE_API_KEY,
+});
+
+(async () => {
+  try {
+    const resultObject = await ff.pdf.form.detect(
+      new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+        type: "application/pdf",
+      }),
+      { options: {} },
+    );
+
+    console.log(resultObject);
+  } catch (error) {
+    console.error("Error during PDF merge:", error);
+  }
+})();
+```
