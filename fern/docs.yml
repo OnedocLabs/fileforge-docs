@@ -83,12 +83,21 @@ navigation:
             icon: fa-brands fa-markdown
           - section: Shell
             contents:
+              - page: Currentpagetop
+                path: ./react-print-pdf/docs/components/shell/currentpagetop.mdx
+                slug: currentpagetop
               - page: Floatbottom
                 path: ./react-print-pdf/docs/components/shell/floatbottom.mdx
                 slug: floatbottom
+              - page: Nobreak
+                path: ./react-print-pdf/docs/components/shell/nobreak.mdx
+                slug: nobreak
               - page: Pagebottom
                 path: ./react-print-pdf/docs/components/shell/pagebottom.mdx
                 slug: pagebottom
+              - page: Pagebreak
+                path: ./react-print-pdf/docs/components/shell/pagebreak.mdx
+                slug: pagebreak
               - page: Pagetop
                 path: ./react-print-pdf/docs/components/shell/pagetop.mdx
                 slug: pagetop
