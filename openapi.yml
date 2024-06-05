@@ -40,7 +40,8 @@ paths:
       x-fern-availability: generally-available
       x-fern-examples: 
         - response: 
-            status: live
+            body: 
+              status: live
           code-samples:
           - sdk: typescript
             code: |
