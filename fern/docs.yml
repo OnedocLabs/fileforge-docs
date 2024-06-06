@@ -37,6 +37,16 @@ navigation:
             path: ./react-print-pdf/docs/getting-started/setup.mdx
             slug: setup
             icon: fa-solid fa-hammer
+      - section: Guides
+        contents:
+          - page: Page Layout & Style
+            path: ./react-print-pdf/docs/guides/page-layout.mdx
+            slug: page-layout
+            icon: fa-solid fa-file
+          - page: Fonts
+            path: ./react-print-pdf/docs/guides/fonts.mdx
+            slug: fonts
+            icon: fa-solid fa-font
       - section: Contributing
         contents:
           - page: Contributing
