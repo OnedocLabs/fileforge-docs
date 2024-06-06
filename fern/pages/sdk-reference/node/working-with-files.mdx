@@ -1,0 +1,158 @@
+---
+title: Working with Files
+---
+
+Working with files can be tricky in Node.js and the browser. Here are the general do's and don'ts, as well as examples on how to handle files.
+
+<Callout intent="warning" title="Memory Usage">
+  When working with files, always be mindful of memory usage. Reading a large
+  file into memory can cause your application to crash. If you need to read a
+  large file, consider using streams.
+</Callout>
+
+## In the browser
+
+All modern browsers and Deno implement the [File API](https://developer.mozilla.org/en-US/docs/Web/API/File). It is the recommended way to interact with the Fileforge API and SDKs in the browser.
+
+The `File` object associates a content stream with important metadata like the file's name, size, and MIME type.
+
+### Creating a File instance
+
+#### Creating a File object from a Blob, Buffer or String
+
+```ts
+const pdfFile = new File([pdfData], "example.pdf", { type: "application/pdf" });
+const htmlFile = new File([`<p>Hello World!</p>`], "example.html", {
+  type: "text/html",
+});
+```
+
+#### Creating a File object from a File input
+
+```ts
+const fileInput = document.getElementById("fileInput") as HTMLInputElement;
+const file = fileInput.files[0];
+```
+
+### Consuming a File
+
+#### Creating a URL for a File
+
+Creating an object URL for a file is useful when you need to display the file in a specific context like an `<iframe>`, or if you want to trigger a download.
+
+```ts
+const url = URL.createObjectURL(pdfFile);
+
+// Use the URL in an iframe
+const iframe = document.createElement("iframe");
+iframe.src = url;
+
+// Open the file in a new tab
+window.open(url);
+```
+
+### Converting a ReadableStream to a File
+
+<Callout intent="note">
+  This example is only applicable in browser-like environments. In Node.js
+  environments, the SDK response is a `Readable` rather than a `ReadableStream`.
+</Callout>
+
+When interacting with API methods that return a file, the SDK will return a `ReadableStream`. Here is how to convert it back to a `File` object.
+
+```ts
+// Note: this API call returns a ReadableStream only in browser-like environments
+const file = (await ff.pdf.generate(html, {
+  options: {
+    host: false,
+  },
+})) as ReadableStream;
+
+// Note: this accumulates the entire file in memory
+const blob = await new Response(file).blob();
+const fileObject = new File([blob], "file.pdf", {
+  type: "application/pdf",
+});
+
+const url = URL.createObjectURL(fileObject);
+
+window.open(url);
+```
+
+## In Node.js
+
+Node.js does not have a built-in `File` object like the browser. We recommend working with the polyfill from [`formdata-node`](https://www.npmjs.com/package/formdata-node) that provides a similar API to the browser. `formdata-node` is shipped with the Fileforge SDK.
+
+### Reading a File
+
+#### From an existing file
+
+```ts
+import { File } from "formdata-node";
+import { readFile } from "fs/promises";
+
+const pdfFile = new File([await readFile("example.pdf")], "example.pdf", {
+  type: "application/pdf",
+});
+```
+
+#### From an existing file, streamed
+
+```ts
+import { File } from "formdata-node";
+import { createReadStream } from "fs";
+
+// Create a File object from a stream
+class BlobFromStream {
+  #stream;
+
+  constructor(stream, size) {
+    this.#stream = stream;
+    this.size = size;
+  }
+
+  stream() {
+    return this.#stream;
+  }
+
+  get [Symbol.toStringTag]() {
+    return "Blob";
+  }
+}
+
+const pdfFile = new File(
+  [new BlobFromStream(createReadStream("example.pdf"))],
+  "example.pdf",
+  {
+    type: "application/pdf",
+  }
+);
+```
+
+#### Without using File
+
+In some cases, you may not want or need to use the `File` object. You can work with the file directly using streams. Note that some endpoints, such as `generate` and `merge` rely on file names to determine root files and links. Not passing Files may cause issues with these endpoints.
+
+```ts
+const file = (await ff.pdf.generate(createReadStream("./index.html"), {
+  options: {
+    host: false,
+  },
+})) as Readable;
+```
+
+### Consuming a SDK response
+
+When interacting with API methods that return a file, the SDK will return a `Readable`. Here is how to consume it.
+
+```ts
+import { createWriteStream } from "fs";
+
+const file = (await ff.pdf.generate(createReadStream("./index.html"), {
+  options: {
+    host: false,
+  },
+})) as Readable;
+
+file.pipe(createWriteStream("file.pdf"));
+```

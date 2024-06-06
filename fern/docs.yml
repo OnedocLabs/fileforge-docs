@@ -83,12 +83,21 @@ navigation:
             icon: fa-brands fa-markdown
           - section: Shell
             contents:
+              - page: Currentpagetop
+                path: ./react-print-pdf/docs/components/shell/currentpagetop.mdx
+                slug: currentpagetop
               - page: Floatbottom
                 path: ./react-print-pdf/docs/components/shell/floatbottom.mdx
                 slug: floatbottom
+              - page: Nobreak
+                path: ./react-print-pdf/docs/components/shell/nobreak.mdx
+                slug: nobreak
               - page: Pagebottom
                 path: ./react-print-pdf/docs/components/shell/pagebottom.mdx
                 slug: pagebottom
+              - page: Pagebreak
+                path: ./react-print-pdf/docs/components/shell/pagebreak.mdx
+                slug: pagebreak
               - page: Pagetop
                 path: ./react-print-pdf/docs/components/shell/pagetop.mdx
                 slug: pagetop
@@ -179,7 +188,7 @@ navigation:
             slug: authentication
       - api: API Reference
         snippets:
-          typescript: '@fileforge/client'
+          typescript: "@fileforge/client"
   - tab: SDK
     layout:
       - section: Getting Started
@@ -187,7 +196,8 @@ navigation:
           - page: Getting Started
             path: ./pages/sdk-reference/introduction.mdx
             slug: sdk-reference
-      - section: Node
+      - section: JS/Node
+        slug: node
         contents:
           - page: Getting Started
             path: ./pages/sdk-reference/node/introduction.mdx
@@ -195,6 +205,9 @@ navigation:
           - page: Error Handling
             path: ./pages/sdk-reference/node/errors.mdx
             slug: node-error-handling
+          - page: Working with Files
+            path: ./pages/sdk-reference/node/working-with-files.mdx
+            slug: node-working-with-files
           - section: PDF
             contents:
               - page: fromDocx
@@ -221,11 +234,11 @@ navigation:
                     contents:
                       - page: FormFillRequestOptionsFieldsItem
                         path: >-
-                          ./pages/sdk-reference/node/Form/Types/formFillRequestOptionsFieldsItem.mdx
+                          ./pages/sdk-reference/node/Form/Types/formfillrequestoptionsfieldsitem.mdx
                         slug: formFillRequestOptionsFieldsItem
                       - page: FormDetectResponseItem
                         path: >-
-                          ./pages/sdk-reference/node/Form/Types/FormDetectResponseItem.mdx
+                          ./pages/sdk-reference/node/Form/Types/formdetectresponseitem.mdx
                         slug: formDetectResponseItem
   - tab: help
     layout:
@@ -242,10 +255,10 @@ navigation:
             path: ./pages/help_center/html_to_pdf/generate-hosted-pdf-from-html.mdx
             slug: generate-hosted-pdf
 colors:
-  accentPrimary: '#AD8AFF'
+  accentPrimary: "#AD8AFF"
   background:
-    dark: '#000000'
-    light: '#ffffff'
+    dark: "#000000"
+    light: "#ffffff"
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg

@@ -1,0 +1,39 @@
+### `FormFillRequestOptionsFieldsItem` Types
+
+#### PDF Text Field
+
+| Property | Type   | Required | Description                                                                                                                                                                                                              |
+| -------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`   | string | Yes      | Name of the field to fill. This must match an exact name from the PDF document. To detect all fields, use the `/pdf/form/fields` endpoint or `/pdf/form/mark` endpoint to get an annotated PDF with each detected field. |
+| `type`   | string | Yes      | `"PDFTextField"`                                                                                                                                                                                                         |
+| `value`  | string | Yes      | The value to fill into the text field.                                                                                                                                                                                   |
+
+OR
+
+#### PDF CheckBox
+
+| Property  | Type    | Required | Description                                                                                                                                                                                                              |
+| --------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`    | string  | Yes      | Name of the field to fill. This must match an exact name from the PDF document. To detect all fields, use the `/pdf/form/fields` endpoint or `/pdf/form/mark` endpoint to get an annotated PDF with each detected field. |
+| `type`    | string  | Yes      | `"PDFCheckBox"`                                                                                                                                                                                                          |
+| `checked` | boolean | Yes      | Indicates whether the checkbox is checked.                                                                                                                                                                               |
+
+OR
+
+#### PDF Option List or Dropdown
+
+| Property   | Type            | Required | Description                                                                                                                                                                                                              |
+| ---------- | --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`     | string          | Yes      | Name of the field to fill. This must match an exact name from the PDF document. To detect all fields, use the `/pdf/form/fields` endpoint or `/pdf/form/mark` endpoint to get an annotated PDF with each detected field. |
+| `type`     | enum            | Yes      | Allowed values: `"PDFOptionList"`, `"PDFDropdown"`                                                                                                                                                                       |
+| `selected` | list of strings | Yes      | List of selected options.                                                                                                                                                                                                |
+
+OR
+
+#### PDF Radio Group
+
+| Property   | Type   | Required | Description                                                                                                                                                                                                              |
+| ---------- | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `name`     | string | Yes      | Name of the field to fill. This must match an exact name from the PDF document. To detect all fields, use the `/pdf/form/fields` endpoint or `/pdf/form/mark` endpoint to get an annotated PDF with each detected field. |
+| `type`     | string | Yes      | `"PDFRadioGroup"`                                                                                                                                                                                                        |
+| `selected` | string | Yes      | Selected option in the radio group.                                                                                                                                                                                      |
