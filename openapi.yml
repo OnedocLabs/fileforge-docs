@@ -165,6 +165,42 @@ paths:
         - pdf
       x-fern-sdk-method-name: fromDocx
       x-fern-availability: beta
+      x-fern-examples: 
+        - response: 
+            body: 
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileforgeClient } from "@fileforge/client";
+              import * as fs from "fs";
+
+              const ff = new FileforgeClient({
+                apiKey: process.env.FILEFORGE_API_KEY,
+              });
+
+              (async () => {
+                try {
+                  const pdfFiles = [
+                    fs.createReadStream(__dirname + "/pdf1.pdf"),
+                    fs.createReadStream(__dirname + "/pdf2.pdf"),
+                  ];
+                  const mergedPdfStream = await ff.pdf.merge(
+                    pdfFiles,
+                    {
+                      options: {
+                        // Specify merge options if any
+                      },
+                    },
+                    {
+                      timeoutInSeconds: 60,
+                    },
+                  );
+                  mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
+                  console.log("PDF merge successful. Stream ready.");
+                } catch (error) {
+                  console.error("Error during PDF merge:", error);
+                }
+              })();
       responses:
         "201":
           description: PDF Document generated successfully
@@ -265,6 +301,47 @@ paths:
         - pdf
       x-fern-sdk-method-name: generate
       x-fern-availability: generally-available
+      x-fern-examples: 
+        - response: 
+            body: 
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileforgeClient } from "@fileforge/client";
+              
+              const HTML = `<!doctype html><html><body><h1>Hello world</h1></body></html>"`;
+
+              const ff = new FileforgeClient({
+                apiKey: process.env.FILEFORGE_API_KEY,
+              });
+
+              (async () => {
+                try {
+                  const pdf = await ff.pdf.generate(
+                    [
+                      new File(
+                        ["<!doctype html><html><body><h1>Hello world</h1></body></html>"],
+                        "index.html",
+                        {
+                          type: "text/html",
+                        },
+                      ),
+                    ],
+                    {
+                      options: {
+                        host: true,
+                      },
+                    },
+                    {
+                      timeoutInSeconds: 30,
+                    },
+                  );
+
+                  console.log(pdf.url);
+                } catch (error) {
+                  console.error("Error during PDF conversion:", error);
+                }
+              })();
       responses:
         "201":
           description: PDF Document generated successfully
@@ -340,6 +417,42 @@ paths:
         - pdf
       x-fern-sdk-method-name: merge
       x-fern-availability: generally-available
+      x-fern-examples: 
+        - response: 
+            body: 
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileforgeClient } from "@fileforge/client";
+              import * as fs from "fs";
+
+              const ff = new FileforgeClient({
+                apiKey: process.env.FILEFORGE_API_KEY,
+              });
+
+              (async () => {
+                try {
+                  const pdfFiles = [
+                    fs.createReadStream(__dirname + "/pdf1.pdf"),
+                    fs.createReadStream(__dirname + "/pdf2.pdf"),
+                  ];
+                  const mergedPdfStream = await ff.pdf.merge(
+                    pdfFiles,
+                    {
+                      options: {
+                        // Specify merge options if any
+                      },
+                    },
+                    {
+                      timeoutInSeconds: 60,
+                    },
+                  );
+                  mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
+                  console.log("PDF merge successful. Stream ready.");
+                } catch (error) {
+                  console.error("Error during PDF merge:", error);
+                }
+              })();
       responses:
         "201":
           description: PDF Document generated successfully
@@ -399,6 +512,33 @@ paths:
         - form
       x-fern-sdk-method-name: detect
       x-fern-availability: beta
+      x-fern-examples: 
+        - response: 
+            body: 
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileforgeClient } from "@fileforge/client";
+              import * as fs from "fs";
+
+              const ff = new FileforgeClient({
+                apiKey: process.env.FILEFORGE_API_KEY,
+              });
+
+              (async () => {
+                try {
+                  const resultObject = await ff.pdf.form.detect(
+                    new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+                      type: "application/pdf",
+                    }),
+                    { options: {} },
+                  );
+
+                  console.log(resultObject);
+                } catch (error) {
+                  console.error("Error during PDF merge:", error);
+                }
+              })();
       responses:
         "200":
           description: Document fields detected successfully
@@ -564,6 +704,34 @@ paths:
         - form
       x-fern-sdk-method-name: mark
       x-fern-availability: beta
+      x-fern-examples: 
+        - response: 
+            body: 
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileforgeClient } from "@fileforge/client";
+              import * as fs from "fs";
+
+              const ff = new FileforgeClient({
+                apiKey: process.env.FILEFORGE_API_KEY,
+              });
+
+              (async () => {
+                try {
+                  const pdfStream = await ff.pdf.form.mark(
+                    new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+                      type: "application/pdf",
+                    }),
+                    { options: {} },
+                  );
+
+                  pdfStream.pipe(fs.createWriteStream("./result_mark.pdf"));
+                } catch (error) {
+                  console.error("Error during PDF merge:", error);
+                }
+
+              })();
       responses:
         "201":
           description: Marked PDF Document generated successfully
@@ -709,6 +877,50 @@ paths:
         - form
       x-fern-sdk-method-name: fill
       x-fern-availability: beta
+      x-fern-examples: 
+        - response: 
+            body: 
+          code-samples:
+          - sdk: typescript
+            code: |
+              import { FileforgeClient } from "@fileforge/client";
+              import * as fs from "fs";
+
+              const ff = new FileforgeClient({
+                apiKey: process.env.FILEFORGE_API_KEY,
+              });
+
+              (async () => {
+                try {
+                  const formFillRequest = {
+                    options: {
+                      fields: [
+                        {
+                          name: "Producer Name",
+                          type: "PDFTextField",
+                          value: "Titouan Launay",
+                        },
+                      ],
+                    },
+                  };
+                  const requestOptions = {
+                    timeoutInSeconds: 60,
+                    maxRetries: 3,
+                  };
+                  const filledPdfStream = await ff.pdf.form.fill(
+                    new File([fs.readFileSync(__dirname + "/form.pdf")], "form.pdf", {
+                      type: "application/pdf",
+                    }),
+                    formFillRequest,
+                    requestOptions
+                  );
+
+                  filledPdfStream.pipe(fs.createWriteStream("./result_filled.pdf"));
+                  console.log("PDF form filling successful. Stream ready.");
+                } catch (error) {
+                  console.error("Error during PDF form filling:", error);
+                }
+              })();
       responses:
         "201":
           description: PDF Document filled successfully
