@@ -198,7 +198,7 @@ navigation:
             slug: authentication
       - api: API Reference
         snippets:
-          typescript: "@fileforge/client"
+          typescript: '@fileforge/client'
   - tab: SDK
     layout:
       - section: Getting Started
@@ -265,10 +265,10 @@ navigation:
             path: ./pages/help_center/html_to_pdf/generate-hosted-pdf-from-html.mdx
             slug: generate-hosted-pdf
 colors:
-  accentPrimary: "#AD8AFF"
+  accentPrimary: '#AD8AFF'
   background:
-    dark: "#000000"
-    light: "#ffffff"
+    dark: '#000000'
+    light: '#ffffff'
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg
