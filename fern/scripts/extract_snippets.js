@@ -91,10 +91,6 @@ const extractSnippets = () => {
     "../sdk/packages/typescript/src/test/snippets.test.ts"
   ); // Change this to your TypeScript file
   const functions = extractFunctions(filePath);
-  functions.forEach((func, index) => {
-    console.log(`Function ${index + 1}:\n${func}\n`);
-    console.log("-------------------------");
-  });
 
   return functions;
 };
