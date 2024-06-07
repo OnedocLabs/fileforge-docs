@@ -180,25 +180,19 @@ paths:
 
               (async () => {
                 try {
-                  const pdfFiles = [
-                    fs.createReadStream(__dirname + "/pdf1.pdf"),
-                    fs.createReadStream(__dirname + "/pdf2.pdf"),
-                  ];
-                  const mergedPdfStream = await ff.pdf.merge(
-                    pdfFiles,
+                  const docxFile = fs.createReadStream(__dirname + "/document-simple.docx");
+                  const pdfStream = await ff.pdf.fromDocx(
+                    docxFile,
+                    {},
                     {
-                      options: {
-                        // Specify merge options if any
-                      },
-                    },
-                    {
-                      timeoutInSeconds: 60,
+                      timeoutInSeconds: 30,
                     },
                   );
-                  mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
-                  console.log("PDF merge successful. Stream ready.");
+
+                  pdfStream.pipe(fs.createWriteStream("./result_docx.pdf"));
+                  console.log("PDF conversion successful. Stream ready.");
                 } catch (error) {
-                  console.error("Error during PDF merge:", error);
+                  console.error("Error during PDF conversion:", error);
                 }
               })();
       responses:
