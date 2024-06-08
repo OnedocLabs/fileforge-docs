@@ -37,6 +37,16 @@ navigation:
             path: ./react-print-pdf/docs/getting-started/setup.mdx
             slug: setup
             icon: fa-solid fa-hammer
+      - section: Guides
+        contents:
+          - page: Page Layout & Style
+            path: ./react-print-pdf/docs/guides/page-layout.mdx
+            slug: page-layout
+            icon: fa-solid fa-file
+          - page: Fonts
+            path: ./react-print-pdf/docs/guides/fonts.mdx
+            slug: fonts
+            icon: fa-solid fa-font
       - section: Contributing
         contents:
           - page: Contributing
@@ -188,7 +198,7 @@ navigation:
             slug: authentication
       - api: API Reference
         snippets:
-          typescript: "@fileforge/client"
+          typescript: '@fileforge/client'
   - tab: SDK
     layout:
       - section: Getting Started
@@ -255,10 +265,10 @@ navigation:
             path: ./pages/help_center/html_to_pdf/generate-hosted-pdf-from-html.mdx
             slug: generate-hosted-pdf
 colors:
-  accentPrimary: "#AD8AFF"
+  accentPrimary: '#AD8AFF'
   background:
-    dark: "#000000"
-    light: "#ffffff"
+    dark: '#000000'
+    light: '#ffffff'
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg

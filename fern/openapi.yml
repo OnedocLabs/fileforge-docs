@@ -1,13 +1,10 @@
 openapi: 3.0.0
 info:
-  title: FileForge API
-  description: FileForge API for document operations.
+  title: Fileforge API
+  description: Fileforge API for document operations.
   version: 0.1.0
 components:
   securitySchemes:
-    basicAuth:
-      type: http
-      scheme: basic
     apiKey:
       type: apiKey
       name: X-API-Key
@@ -90,7 +87,7 @@ paths:
 
 
         To enable variable replacement as Word variables for your account,
-        please contact the FileForge support.
+        please contact the Fileforge support.
       requestBody:
         content:
           multipart/form-data:
