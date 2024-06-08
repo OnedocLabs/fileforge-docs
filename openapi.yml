@@ -196,37 +196,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: typescript
-              code: |-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const docxFile = fs.createReadStream(
-                        __dirname + "/samples/document-simple.docx",
-                      );
-                      const pdfStream = await ff.pdf.fromDocx(
-                        docxFile,
-                        {},
-                        {
-                          timeoutInSeconds: 30,
-                        },
-                      );
-
-                      pdfStream.pipe(fs.createWriteStream("./result_docx.pdf"));
-                      console.log("PDF conversion successful. Stream ready.");
-
-                    } catch (error) {
-                      console.error("Error during PDF conversion:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/generate/:
     post:
       operationId: generatePDFDocument
@@ -256,7 +225,7 @@ paths:
                     host:
                       type: boolean
                       description: >-
-                        If enabled, the document will be hosted by Fileforge and
+                        If enabled, the document will be hosted by FileForge and
                         a presigned URL will be returned.
                       default: false
                     expiresAt:
@@ -349,44 +318,6 @@ paths:
               schema:
                 description: Bad Gateway
                 $ref: '#/components/schemas/def-0'
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: typescript
-              code: |-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdf = await ff.pdf.generate(
-                        [
-                          new File(
-                            ["<!doctype html><html><body><h1>Hello world</h1></body></html>"],
-                            "index.html",
-                            {
-                              type: "text/html",
-                            },
-                          ),
-                        ],
-                        {
-                          options: {
-                            host: true,
-                          },
-                        },
-                        {
-                          timeoutInSeconds: 30,
-                        },
-                      );
-
-                      console.log(pdf.url);
-                    } catch (error) {
-                      console.error("Error during PDF generation:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/merge/:
     post:
       operationId: mergePDFDocuments
@@ -445,40 +376,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: typescript
-              code: |-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdfFiles = [
-                        fs.createReadStream(__dirname + "/pdf1.pdf"),
-                        fs.createReadStream(__dirname + "/pdf2.pdf"),
-                      ];
-                      const mergedPdfStream = await ff.pdf.merge(
-                        pdfFiles,
-                        {
-                          options: {
-                            // Specify merge options if any
-                          },
-                        },
-                        {
-                          timeoutInSeconds: 60,
-                        },
-                      );
-                      mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
-                      console.log("PDF merge successful. Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF merge:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/form/detect/:
     post:
       operationId: detectPDFFormFields
@@ -646,35 +543,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: typescript
-              code: |-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const resultObject = await ff.pdf.form.detect(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        { options: {} },
-                      );
-
-                      console.log(resultObject);
-                    } catch (error) {
-                      console.error("Error during PDF form detect:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/form/mark/:
     post:
       operationId: markPDFFormFields
@@ -734,35 +602,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: typescript
-              code: |-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdfStream = await ff.pdf.form.mark(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        { options: {} },
-                      );
-
-                      pdfStream.pipe(fs.createWriteStream("./result_mark.pdf"));
-                    } catch (error) {
-                      console.error("Error during PDF form mark:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/form/fill/:
     post:
       operationId: fillPDFFormFields
@@ -913,51 +752,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: typescript
-              code: |-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const formFillRequest = {
-                        options: {
-                          fields: [
-                            {
-                              name: "Producer Name",
-                              type: "PDFTextField",
-                              value: "Titouan Launay",
-                            } as FormFillRequestOptionsFieldsItemValue,
-                          ],
-                        },
-                      };
-                      const requestOptions = {
-                        timeoutInSeconds: 60,
-                        maxRetries: 3,
-                      };
-                      const filledPdfStream = await ff.pdf.form.fill(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        formFillRequest,
-                        requestOptions,
-                      );
-
-                      filledPdfStream.pipe(fs.createWriteStream("./result_filled.pdf"));
-                      console.log("PDF form filling successful. Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF form filling:", error);
-                    }
-                  })();
 servers:
   - url: https://api.fileforge.com
     description: Tunnel server
