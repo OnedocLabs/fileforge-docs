@@ -199,6 +199,9 @@ paths:
           code-samples:
             - sdk: typescript
               code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
                 (async () => {
                     const ff = new FileforgeClient({
                       apiKey: process.env.FILEFORGE_API_KEY,
@@ -352,6 +355,9 @@ paths:
           code-samples:
             - sdk: typescript
               code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
                 (async () => {
                     const ff = new FileforgeClient({
                       apiKey: process.env.FILEFORGE_API_KEY,
@@ -448,6 +454,9 @@ paths:
           code-samples:
             - sdk: typescript
               code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
                 (async () => {
                     const ff = new FileforgeClient({
                       apiKey: process.env.FILEFORGE_API_KEY,
@@ -649,6 +658,9 @@ paths:
           code-samples:
             - sdk: typescript
               code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
                 (async () => {
                     const ff = new FileforgeClient({
                       apiKey: process.env.FILEFORGE_API_KEY,
@@ -737,6 +749,9 @@ paths:
           code-samples:
             - sdk: typescript
               code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
                 (async () => {
                     const ff = new FileforgeClient({
                       apiKey: process.env.FILEFORGE_API_KEY,
@@ -916,6 +931,9 @@ paths:
           code-samples:
             - sdk: typescript
               code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
                 (async () => {
                     const ff = new FileforgeClient({
                       apiKey: process.env.FILEFORGE_API_KEY,
