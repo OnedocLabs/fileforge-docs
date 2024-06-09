@@ -18,14 +18,17 @@ const { extractSnippets } = require("./extract_snippets");
 
     const keywordToSnippetsMap = {};
 
-    const removeExpectLines = (snippet) => {
-      return "("+snippet.split('\n').filter(line => !line.trim().startsWith('expect')).join('\n')+")();";
+    const imports = `import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";\n\n(`;
+
+    const removeExpectLinesAndInsertImports = (snippet) => {
+      return imports + snippet.split('\n').filter(line => !line.trim().startsWith('expect')).join('\n')+")();";
     };
     
     snippets.forEach((func, index) => {
       keywords.forEach(keyword => {
         if( func.includes(keyword) ) {
-          keywordToSnippetsMap[keyword] = removeExpectLines(func); // removes expect lines from the snippet
+          keywordToSnippetsMap[keyword] = removeExpectLinesAndInsertImports(func); // removes expect lines from the snippet
         }
       })
     });
@@ -58,9 +61,8 @@ const { extractSnippets } = require("./extract_snippets");
       Object.keys(operations).forEach((method) => {
         const operation = operations[method];
         const sdk_method = operation["x-fern-sdk-method-name"];
-
+        
         if (keywordToSnippetsMap[sdk_method]) {
-          
           addFernExamples(operation, keywordToSnippetsMap[sdk_method]);
         }
       });
