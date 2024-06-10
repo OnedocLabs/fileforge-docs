@@ -4,28 +4,39 @@ This documentation provides an example of how to use the FileforgeClient to gene
 
 Ensure you have the following:
 
-- An API key for Fileforge as an environment variable: process.env.FILEFORGE_API_KEY.
+- An API key for Fileforge as an environment variable: **process.env.FILEFORGE_API_KEY**
 - Node.js and npm installed.
+- The Fileforge Client [installed](/getting-started/general/authentication).
+- react-print [installed](/react-print/welcome/setup).
 
-#### Example Code
+#### Guide
 
-Write your react component:
+<Steps>
+### Write your react component:
 
 ```typescript
 import React from 'react';
-
 // Define the HelloWorld component
 const HelloWorld = () => {
     return (
         <h1>Hello World!</h1>
     );
 };
-
 // Export the HelloWorld component
 export default HelloWorld;
 ```
 
-Compile it to HTML using react-print's [compile](/react-print/components/compile/compile) function:
+### Compile it to HTML using react-print's [compile](/react-print/components/compile/compile) function:
+
+```typescript
+import { compile } from "@fileforge/react-print";
+import HelloWorld from "./HelloWorld";
+
+const HTML = await compile(<HelloWorld />);
+
+```
+
+### Generate the PDF from your compiled HTML
 
 ```typescript
 import { FileforgeClient } from "@fileforge/client";
@@ -38,12 +49,7 @@ const ff = new FileforgeClient({
   try {
     const pdf = await ff.pdf.generate(
       [
-        new File(
-          [HTML],
-          {
-            type: "text/html",
-          },
-        ),
+        new File([HTML], "index.html", { type: "text/html" }),
       ],
       {
         options: {
@@ -60,3 +66,4 @@ const ff = new FileforgeClient({
   }
 })();
 ```
+</Steps>
