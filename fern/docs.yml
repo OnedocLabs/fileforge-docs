@@ -29,26 +29,30 @@ navigation:
         contents:
           - section: HTML to PDF
             contents:
-            - section: Generate PDF
-              contents:
+              - section: Generate PDF
+                contents:
                   - page: Generate a local PDF
-                    path: ./pages/help_center/html-to-pdf/generate-pdf-from-html-local.mdx
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-pdf-from-html-local.mdx
                     slug: generate-local-pdf-from-html
                     icon: fa-solid fa-download
                   - page: Generate a hosted PDF
-                    path: ./pages/help_center/html-to-pdf/generate-hosted-pdf-from-html.mdx
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-hosted-pdf-from-html.mdx
                     slug: generate-hosted-pdf-from-html
                     icon: fa-solid fa-cloud
                   - page: Generate a PDF with react-print
-                    path: ./pages/help_center/html-to-pdf/generate-pdf-from-html-react-print.mdx
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-pdf-from-html-react-print.mdx
                     slug: generate-pdf-from-html
                     icon: fa-brands fa-react
                   - page: Generate a PDF with assets
-                    path: ./pages/help_center/html-to-pdf/generate-pdf-from-html-assets.mdx
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-pdf-from-html-assets.mdx
                     slug: generate-pdf-from-html-assets
                     icon: fa-solid fa-paperclip
-            - section: Styling your PDF
-              contents:
+              - section: Styling your PDF
+                contents:
                   - page: Page Layout & Style
                     path: ./react-print-pdf/docs/guides/page-layout.mdx
                     slug: page-layout
@@ -59,30 +63,38 @@ navigation:
                     icon: fa-solid fa-font
           - section: DOCX to PDF
             contents:
-                  - page: DOCX to PDF with variables
-                    path: ./pages/help_center/docx-to-pdf/convert-docx-to-pdf.mdx
-                    slug: convert-docx-to-pdf
-                    icon: fa-solid fa-file-word
+              - page: DOCX to PDF with variables
+                path: ./pages/help_center/docx-to-pdf/convert-docx-to-pdf.mdx
+                slug: convert-docx-to-pdf
+                icon: fa-solid fa-file-word
           - section: PDF Operations
             contents:
-                  - page: Merge
-                    path: ./pages/help_center/merge-pdfs/merge-multiple-pdfs.mdx
-                    slug: pdf-merge
-                    icon: fa-solid fa-files
+              - page: Merge
+                path: ./pages/help_center/merge-pdfs/merge-multiple-pdfs.mdx
+                slug: pdf-merge
+                icon: fa-solid fa-files
+              - page: Split
+                path: ./pages/help_center/split-pdfs/split-pdf.mdx
+                slug: pdf-split
+                icon: fa-solid fa-file-dashed-line
+              - page: Extract Pages
+                path: ./pages/help_center/extract-pages/extract-pages-from-pdf.mdx
+                slug: pdf-extract
+                icon: fa-solid fa-copy
           - section: PDF Form Operations
             contents:
-                  - page: Detect fields
-                    path: ./pages/help_center/pdf-forms/detect.mdx
-                    slug: pdf-form-detect
-                    icon: fa-solid fa-magnifying-glass
-                  - page: Mark fields
-                    path: ./pages/help_center/pdf-forms/mark.mdx
-                    slug: pdf-form-mark
-                    icon: fa-solid fa-pencil
-                  - page: Fill fields
-                    path: ./pages/help_center/pdf-forms/fill.mdx
-                    slug: pdf-form-fill
-                    icon: fa-solid fa-pen-to-square
+              - page: Detect fields
+                path: ./pages/help_center/pdf-forms/detect.mdx
+                slug: pdf-form-detect
+                icon: fa-solid fa-magnifying-glass
+              - page: Mark fields
+                path: ./pages/help_center/pdf-forms/mark.mdx
+                slug: pdf-form-mark
+                icon: fa-solid fa-pencil
+              - page: Fill fields
+                path: ./pages/help_center/pdf-forms/fill.mdx
+                slug: pdf-form-fill
+                icon: fa-solid fa-pen-to-square
   - tab: react-print
     layout:
       - section: Welcome
@@ -253,12 +265,12 @@ navigation:
             slug: api-reference
       - api: API Reference
         snippets:
-          typescript: '@fileforge/client'
+          typescript: "@fileforge/client"
 colors:
-  accentPrimary: '#AD8AFF'
+  accentPrimary: "#AD8AFF"
   background:
-    dark: '#000000'
-    light: '#ffffff'
+    dark: "#000000"
+    light: "#ffffff"
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg
