@@ -257,7 +257,7 @@ navigation:
         snippets:
           typescript: '@fileforge/client'
 colors:
-  accentPrimary: '#AD8AFF'
+  accentPrimary: '#82C7FF'
   background:
     dark: '#000000'
     light: '#ffffff'

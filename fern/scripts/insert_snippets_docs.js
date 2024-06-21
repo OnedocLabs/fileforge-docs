@@ -16,6 +16,51 @@ const { extractSnippets } = require("./extract_snippets");
       "fill",
     ];
 
+    const curlSnippets={"fromDocx":`curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/docx/'\n \
+-H 'accept: application/pdf'\n \
+-H 'X-API-Key: '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={"keepOriginalStyles":true,"templateLiterals":{"additionalProp1":"string","additionalProp2":"string","additionalProp3":"string"}};type=application/json'\n \
+  -F 'file=@demo.docx;type=application/vnd.openxmlformats-officedocument.wordprocessingml.document'`,
+  "generate":`curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/generate/'\n \
+-H 'accept: application/pdf'\n \
+-H 'X-API-Key: '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={"test":true,"host":false,"expiresAt":"2024-06-21T12:10:51.382Z","fileName":"document"};type=application/json'\n \
+  -F 'files=@index.html;type=text/html'`,
+  "merge":`curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/merge/'\n \
+-H 'accept: application/pdf'\n \
+-H 'X-API-Key: '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={};type=application/json'\n \
+  -F 'files=@doc.pdf;type=application/pdf'\n \
+  -F 'files=@document (18).pdf;type=application/pdf'`,
+  "detect":`curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/form/detect/'\n \
+-H 'accept: application/json'\n \
+-H 'X-API-Key: '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={};type=application/json'\n \
+  -F 'file=@document (18).pdf;type=application/pdf'\n`,
+  "mark":`curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/form/mark/'\n \
+-H 'accept: application/pdf'\n \
+-H 'X-API-Key: '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={};type=application/json'\n \
+  -F 'file=@document (18).pdf;type=application/pdf'`,
+  "fill":`curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/form/fill/'\n \
+-H 'accept: application/pdf'\n \
+-H 'X-API-Key: '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={"fields":[{"name":"string","type":"PDFTextField","value":"string"},{"name":"string","type":"PDFCheckBox","checked":true},{"name":"string","type":"PDFOptionList","selected":["string"]},{"name":"string","type":"PDFRadioGroup","selected":"string"}]};type=application/json'\n \
+  -F 'file=@document (18).pdf;type=application/pdf'`,
+  }
+
     const keywordToSnippetsMap = {};
 
     const imports = `import { FileforgeClient } from "@fileforge/client";
@@ -40,13 +85,17 @@ import * as fs from "fs";\n\n(`;
       fs.readFileSync(openApiDraft, "utf8")
     );
 
-    const addFernExamples = (pathObj, sdkCode) => {
+    const addFernExamples = (pathObj, sdkCode, sdk_method) => {
       pathObj['x-fern-examples'] = [
         {
           response: {
             body: null
           },
           'code-samples': [
+            {
+              sdk: 'curl',
+              code: curlSnippets[sdk_method]
+            },
             {
               sdk: 'typescript',
               code: sdkCode
@@ -63,7 +112,7 @@ import * as fs from "fs";\n\n(`;
         const sdk_method = operation["x-fern-sdk-method-name"];
         
         if (keywordToSnippetsMap[sdk_method]) {
-          addFernExamples(operation, keywordToSnippetsMap[sdk_method]);
+          addFernExamples(operation, keywordToSnippetsMap[sdk_method], sdk_method);
         }
       });
     });

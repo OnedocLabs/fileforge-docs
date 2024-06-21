@@ -199,7 +199,6 @@ paths:
       x-fern-examples:
         - response:
             body: null
-          code-samples:
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
