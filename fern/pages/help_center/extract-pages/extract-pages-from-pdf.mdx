@@ -1,0 +1,38 @@
+This documentation provides an example of how to use the FileforgeClient to extract pages from a PDF.
+
+#### Prerequisites
+
+Ensure you have the following:
+
+- An API key for Fileforge as an environment variable: **process.env.FILEFORGE_API_KEY**
+- Node.js and npm installed.
+- The Fileforge Client [installed](/getting-started/general/authentication).
+
+#### Guide
+
+<Steps>
+
+### Make sure to set a timeout for the request
+
+If you are extracting pages from a very large file, you may need to increase the timeout as shown below with the `timeoutInSeconds` parameter.
+
+### Extract the pages
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";
+
+BETA TESTING - NOT YET AVAILABLE
+contact@fileforge.com for more information
+```
+
+### About the options and output
+
+You can pass the following parameters to the `extract` method:
+
+- `startPage`: The index of the first page to extract. The index is one-based, so the first page is 1.
+- `endPage`: The index of the last page to extract (included). The index is one-based.
+
+The extract method returns a `.pdf` file containing the extracted pages. The name of the output file is original file name suffixed with `_extracted_startPage_endPage`.
+
+</Steps>

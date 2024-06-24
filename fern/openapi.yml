@@ -199,16 +199,6 @@ paths:
       x-fern-examples:
         - response:
             body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/docx/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"keepOriginalStyles":true,"templateLiterals":{"additionalProp1":"string","additionalProp2":"string","additionalProp3":"string"}};type=application/json'
-                   -F 'file=@demo.docx;type=application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -365,15 +355,6 @@ paths:
         - response:
             body: null
           code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/generate/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"test":true,"host":false,"expiresAt":"2024-06-21T12:10:51.382Z","fileName":"document"};type=application/json'
-                   -F 'files=@index.html;type=text/html'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -473,16 +454,6 @@ paths:
         - response:
             body: null
           code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/merge/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={};type=application/json'
-                   -F 'files=@doc.pdf;type=application/pdf'
-                   -F 'files=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -687,15 +658,6 @@ paths:
         - response:
             body: null
           code-samples:
-            - sdk: curl
-              code: |
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/form/detect/'
-                 -H 'accept: application/json'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -787,15 +749,6 @@ paths:
         - response:
             body: null
           code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/form/mark/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -978,15 +931,6 @@ paths:
         - response:
             body: null
           code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/form/fill/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"fields":[{"name":"string","type":"PDFTextField","value":"string"},{"name":"string","type":"PDFCheckBox","checked":true},{"name":"string","type":"PDFOptionList","selected":["string"]},{"name":"string","type":"PDFRadioGroup","selected":"string"}]};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";

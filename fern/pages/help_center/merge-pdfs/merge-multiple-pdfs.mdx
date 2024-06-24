@@ -1,0 +1,55 @@
+This documentation provides an example of how to use the FileforgeClient to generate combine multiple PDFs into one.
+
+#### Prerequisites
+
+Ensure you have the following:
+
+- An API key for Fileforge as an environment variable: **process.env.FILEFORGE_API_KEY**
+- Node.js and npm installed.
+- The Fileforge Client [installed](/getting-started/general/authentication).
+
+#### Guide
+
+<Steps>
+
+### Make sure to set a timeout for the request
+
+If you are merging many / very large files, you may need to increase the timeout as shown below with the `timeoutInSeconds` parameter.
+
+### Merge the PDFs
+
+```typescript
+import { FileforgeClient } from "@fileforge/client";
+import * as fs from "fs";
+
+(async () => {
+    const ff = new FileforgeClient({
+      apiKey: process.env.FILEFORGE_API_KEY,
+    });
+
+    try {
+      const pdfFiles = [
+        fs.createReadStream(__dirname + "/pdf1.pdf"),
+        fs.createReadStream(__dirname + "/pdf2.pdf"),
+      ];
+      const mergedPdfStream = await ff.pdf.merge(
+        pdfFiles,
+        {
+          options: {
+            // Specify merge options if any
+          },
+        },
+        {
+          timeoutInSeconds: 60,
+        },
+      );
+      mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
+      console.log("PDF merge successful. Stream ready.");
+    } catch (error) {
+      console.error("Error during PDF merge:", error);
+      throw error;
+    }
+  })();
+```
+
+</Steps>

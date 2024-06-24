@@ -1,13 +1,64 @@
 ---
 title: Welcome to Fileforge
 ---
-
-Welcome to Fileforge's API documentation! 👋 
-<br/><br/>**Fileforge is an API for PDF document workflows.**
+**Fileforge is an API for PDF document workflows.**
 <br/>Fileforge enables developers to perform any PDF task like generation, form filling, digital signature and more. 
 Our open-source library helps developers build complex documents that integrate with our API and external services to build document-centric workflows. 
 <br/>Here you’ll find resources and guides for the Fileforge API and open-source React library for PDF generation: [react-print](/react-print/welcome/). 
 <br/>Please don’t hesitate to contact us at support@fileforge.com if you need assisance.
+
+
+## Installation
+
+Before using the `FileforgeClient`, ensure you have the necessary dependencies installed. You can install the required packages using npm or yarn:
+
+```sh
+npm install @fileforge/client
+```
+
+or
+
+```sh
+yarn add @fileforge/client
+```
+
+## Usage
+
+### Importing the Client
+
+First, import the necessary modules from the `fileforge` package.
+
+### Instantiating the Client
+
+To instantiate the `FileforgeClient`, you need to provide your API key and optionally specify the environment. To retrieve your API key, check this out: [Authenticating](/getting-started/general/authentication).
+
+```typescript
+import { FileforgeClient } from '@fileforge/client';
+
+const ff = new FileforgeClient({
+    apiKey: () => 'YOUR_API_KEY',
+});
+
+await ff.getStatus();
+```
+
+
+## ⚡️ Fast Set Up
+
+Clone this repository ⬇️
+<Card 
+  title='dev-local'
+  icon='fa-brands fa-github'
+  href='https://github.com/OnedocLabs/dev-local'
+>
+Clone our dev-local repository and follow the instructions in the readMe to get started quickly.
+</Card>
+
+![dev-local view](https://github.com/OnedocLabs/dev-local/blob/main/src/images/screenshot-dev-local.png?raw=true)
+
+<Callout intent='tip' title='Using dev-local'>
+We recommed splitting your editor into two windows, one for the code and the other for the PDF viewing integration.
+</Callout>
 
 ### Official API Clients
 
@@ -24,11 +75,6 @@ with all stable endpoints. You can find them here:
     title="API Reference"
     icon="fa-solid fa-bolt"
     href="/api-reference/introduction/"
-  />
-  <Card
-    title="SDK Reference"
-    icon="fa-solid fa-code"
-    href="/sdk-reference/getting-started/"
   />
 </Cards>
 
@@ -50,5 +96,4 @@ with all stable endpoints. You can find them here:
     icon="fa-brands fa-youtube"
     href="https://www.youtube.com/@OnedocLabs"
   />
- 
 </Cards>

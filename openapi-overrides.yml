@@ -1,0 +1,9 @@
+paths:
+  /pdf/docx/:
+    post:
+      x-fern-examples: 
+        language: curl
+        code: | 
+          curl -X POST https://api.fileforge.com/pdf/docx/ \
+            -H "X-API-Key: <apiKey>" \
+            -H "Content-Type: multipart/form-data"
