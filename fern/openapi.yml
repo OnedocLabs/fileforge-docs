@@ -199,6 +199,16 @@ paths:
       x-fern-examples:
         - response:
             body: null
+          code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/docx/'
+                 -H 'accept: application/pdf'
+                 -H 'X-API-Key: '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={"keepOriginalStyles":true,"templateLiterals":{"additionalProp1":"string","additionalProp2":"string","additionalProp3":"string"}};type=application/json'
+                   -F 'file=@demo.docx;type=application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -355,6 +365,15 @@ paths:
         - response:
             body: null
           code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/generate/'
+                 -H 'accept: application/pdf'
+                 -H 'X-API-Key: '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={"test":true,"host":false,"expiresAt":"2024-06-21T12:10:51.382Z","fileName":"document"};type=application/json'
+                   -F 'files=@index.html;type=text/html'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -395,6 +414,7 @@ paths:
   /pdf/merge/:
     post:
       operationId: mergePDFDocuments
+      summary: Merges multiple PDF documents into a single PDF document.
       tags:
         - PDF
       description: Merges multiple PDF documents into a single PDF document.
@@ -454,6 +474,16 @@ paths:
         - response:
             body: null
           code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/merge/'
+                 -H 'accept: application/pdf'
+                 -H 'X-API-Key: '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={};type=application/json'
+                   -F 'files=@doc.pdf;type=application/pdf'
+                   -F 'files=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -638,6 +668,16 @@ paths:
                           type: number
                       required:
                         - type
+                    - type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - PDFSignature
+                        defaultValue:
+                          type: string
+                      required:
+                        - type
         '400':
           description: Bad request
           content:
@@ -658,34 +698,43 @@ paths:
         - response:
             body: null
           code-samples:
+            - sdk: curl
+              code: |
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/form/detect/'
+                 -H 'accept: application/json'
+                 -H 'X-API-Key: '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={};type=application/json'
+                   -F 'file=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
                 import * as fs from "fs";
 
                 (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
+                      const ff = new FileforgeClient({
+                        apiKey: process.env.FILEFORGE_API_KEY,
+                      });
 
-                    try {
-                      const resultObject = await ff.pdf.form.detect(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        { options: {} },
-                      );
+                      try {
+                        const resultObject = await ff.pdf.form.detect(
+                          new File(
+                            [fs.readFileSync(__dirname + "/samples/form.pdf")],
+                            "form.pdf",
+                            {
+                              type: "application/pdf",
+                            },
+                          ),
+                          { options: {} },
+                        );
 
-                      console.log(resultObject);
-                    } catch (error) {
-                      console.error("Error during PDF form detect:", error);
-                      throw error;
-                    }
-                  })();
+                        console.log(resultObject);
+                      } catch (error) {
+                        console.error("Error during PDF form detect:", error);
+                        throw error;
+                      }
+                    })();
   /pdf/form/mark/:
     post:
       operationId: markPDFFormFields
@@ -749,6 +798,15 @@ paths:
         - response:
             body: null
           code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/form/mark/'
+                 -H 'accept: application/pdf'
+                 -H 'X-API-Key: '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={};type=application/json'
+                   -F 'file=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -931,6 +989,15 @@ paths:
         - response:
             body: null
           code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/form/fill/'
+                 -H 'accept: application/pdf'
+                 -H 'X-API-Key: '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={"fields":[{"name":"string","type":"PDFTextField","value":"string"},{"name":"string","type":"PDFCheckBox","checked":true},{"name":"string","type":"PDFOptionList","selected":["string"]},{"name":"string","type":"PDFRadioGroup","selected":"string"}]};type=application/json'
+                   -F 'file=@document (18).pdf;type=application/pdf'
             - sdk: typescript
               code: |-
                 import { FileforgeClient } from "@fileforge/client";
@@ -973,6 +1040,255 @@ paths:
                       console.log("PDF form filling successful. Stream ready.");
                     } catch (error) {
                       console.error("Error during PDF form filling:", error);
+                    }
+                  })();
+  /pdf/split/:
+    post:
+      operationId: splitPDFDocuments
+      summary: Splits a PDF document into 2 PDF documents.
+      tags:
+        - PDF
+      description: >-
+        Splits a PDF document into 2 PDF documents. Returns a zip file
+        containing the 2 documents. Each document is named after the original
+        document with a suffix added to indicate the range of pages it contains.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - options
+                - file
+              properties:
+                options:
+                  required:
+                    - splitPage
+                  type: object
+                  properties:
+                    splitPage:
+                      type: integer
+                      minimum: 1
+                      description: >-
+                        The page number to split the document at (the page will
+                        be included in the first document)
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: split
+      x-fern-availability: generally-available
+      responses:
+        '201':
+          description: ZIP file generated successfully
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: '#/components/schemas/def-0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: '#/components/schemas/def-0'
+        '500':
+          description: Internal server error
+      x-fern-examples:
+        - response:
+            body: null
+          code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/split/'
+                 -H 'accept: application/zip'
+                 -H 'X-API-Key : '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={splitPage:1};type=application/json'
+                   -F 'file=@document (18).pdf;type=application/pdf'
+            - sdk: typescript
+              code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
+                (async () => {
+                    const ff = new FileforgeClient({
+                      apiKey: process.env.FILEFORGE_API_KEY,
+                    });
+
+                    try {
+                      const extractRequest = {
+                        options: {
+                          start: 1,
+                          end: 1,
+                        },
+                      };
+                      const requestOptions = {
+                        timeoutInSeconds: 60,
+                        maxRetries: 3,
+                      };
+                      const extractStream = await ff.pdf.extract(
+                        new File(
+                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
+                          "form.pdf",
+                          {
+                            type: "application/pdf",
+                          },
+                        ),
+                        extractRequest,
+                        requestOptions,
+                      );
+
+                      await pipeline(
+                        extractStream,
+                        fs.createWriteStream("./result_extract.pdf"),
+                      );
+                      console.log("Split successful. Zip Stream ready.");
+                    } catch (error) {
+                      console.error("Error during PDF splitting:", error);
+                    }
+                  })();
+  /pdf/extract/:
+    post:
+      operationId: extractPDFDocuments
+      summary: Extract a range of pages from a PDF document.
+      tags:
+        - PDF
+      description: >-
+        Extracts a range of pages from a PDF document. The start and end pages
+        are included in the extracted document. The extracted document is named
+        after the original document with a suffix added to indicate the range of
+        pages it contains (ex:document_extracted_$start_$end.pdf).
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - options
+                - file
+              properties:
+                options:
+                  required:
+                    - start
+                    - end
+                  type: object
+                  properties:
+                    start:
+                      type: integer
+                      minimum: 1
+                      description: The page number to split the document at
+                    end:
+                      type: integer
+                      minimum: 1
+                      description: The page number to split the document at
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: extract
+      x-fern-availability: generally-available
+      responses:
+        '201':
+          description: Extracted PDF file generated successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: '#/components/schemas/def-0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: '#/components/schemas/def-0'
+        '500':
+          description: Internal server error
+      x-fern-examples:
+        - response:
+            body: null
+          code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/extract/'
+                 -H 'accept: application/json'
+                 -H 'X-API-Key
+                : '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={start:1,end:1};type=application/json'
+                   -F 'file=@document (18).pdf;type=application/pdf'
+            - sdk: typescript
+              code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
+                (async () => {
+                    const ff = new FileforgeClient({
+                      apiKey: process.env.FILEFORGE_API_KEY,
+                    });
+
+                    try {
+                      const extractRequest = {
+                        options: {
+                          start: 1,
+                          end: 1,
+                        },
+                      };
+                      const requestOptions = {
+                        timeoutInSeconds: 60,
+                        maxRetries: 3,
+                      };
+                      const extractStream = await ff.pdf.extract(
+                        new File(
+                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
+                          "form.pdf",
+                          {
+                            type: "application/pdf",
+                          },
+                        ),
+                        extractRequest,
+                        requestOptions,
+                      );
+
+                      await pipeline(
+                        extractStream,
+                        fs.createWriteStream("./result_extract.pdf"),
+                      );
+                      console.log("Split successful. Zip Stream ready.");
+                    } catch (error) {
+                      console.error("Error during PDF splitting:", error);
                     }
                   })();
 servers:
