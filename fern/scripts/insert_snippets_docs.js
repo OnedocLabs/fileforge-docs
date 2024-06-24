@@ -149,7 +149,11 @@ import * as fs from "fs";\n\n(`;
     const newYaml = yaml.dump(openApiDraftFile);
 
     // Write the updated YAML back to the file
-    fs.writeFileSync("openapi.yml", newYaml, "utf8");
+    fs.writeFileSync(
+      path.join(__dirname, "../../openapi.yml"),
+      newYaml,
+      "utf8"
+    );
   } catch (error) {
     console.error(error);
   }
