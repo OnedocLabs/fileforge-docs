@@ -43,7 +43,7 @@ paths:
       description: Get the status of the API
       x-fern-availability: generally-available
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
@@ -173,28 +173,28 @@ paths:
       x-fern-sdk-method-name: fromDocx
       x-fern-availability: beta
       responses:
-        "201":
+        '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -321,7 +321,7 @@ paths:
       x-fern-sdk-method-name: generate
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
@@ -338,29 +338,29 @@ paths:
                     type: string
                     format: uri
                     description: URL to the generated PDF document
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
-        "502":
+        '502':
           description: Bad Gateway
           content:
             application/json:
               schema:
                 description: Bad Gateway
-                $ref: "#/components/schemas/def-0"
+                $ref: '#/components/schemas/def-0'
       x-fern-examples:
         - response:
             body: null
@@ -447,28 +447,28 @@ paths:
       x-fern-sdk-method-name: merge
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -554,7 +554,7 @@ paths:
       x-fern-sdk-method-name: detect
       x-fern-availability: beta
       responses:
-        "200":
+        '200':
           description: Document fields detected successfully
           content:
             application/json:
@@ -577,7 +577,7 @@ paths:
                         properties:
                           x:
                             type: number
-                          "y":
+                          'y':
                             type: number
                           width:
                             type: number
@@ -585,7 +585,7 @@ paths:
                             type: number
                         required:
                           - x
-                          - "y"
+                          - 'y'
                           - width
                           - height
                   required:
@@ -678,21 +678,21 @@ paths:
                           type: string
                       required:
                         - type
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -771,28 +771,28 @@ paths:
       x-fern-sdk-method-name: mark
       x-fern-availability: beta
       responses:
-        "201":
+        '201':
           description: Marked PDF Document generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -962,28 +962,28 @@ paths:
       x-fern-sdk-method-name: fill
       x-fern-availability: beta
       responses:
-        "201":
+        '201':
           description: PDF Document filled successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -1086,28 +1086,28 @@ paths:
       x-fern-sdk-method-name: split
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: ZIP file generated successfully
           content:
             application/zip:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -1133,17 +1133,16 @@ paths:
                     });
 
                     try {
-                      const extractRequest = {
+                      const splitRequest = {
                         options: {
-                          start: 1,
-                          end: 1,
+                          splitPage: 1,
                         },
                       };
                       const requestOptions = {
                         timeoutInSeconds: 60,
                         maxRetries: 3,
                       };
-                      const extractStream = await ff.pdf.extract(
+                      const splitArchiveStream = await ff.pdf.split(
                         new File(
                           [fs.readFileSync(__dirname + "/samples/form.pdf")],
                           "form.pdf",
@@ -1151,13 +1150,13 @@ paths:
                             type: "application/pdf",
                           },
                         ),
-                        extractRequest,
+                        splitRequest,
                         requestOptions,
                       );
 
                       await pipeline(
-                        extractStream,
-                        fs.createWriteStream("./result_extract.pdf"),
+                        splitArchiveStream,
+                        fs.createWriteStream("./result_split.zip"),
                       );
                       console.log("Split successful. Zip Stream ready.");
                     } catch (error) {
@@ -1212,28 +1211,28 @@ paths:
       x-fern-sdk-method-name: extract
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: Extracted PDF file generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
       x-fern-examples:
         - response:
@@ -1286,9 +1285,9 @@ paths:
                         extractStream,
                         fs.createWriteStream("./result_extract.pdf"),
                       );
-                      console.log("Split successful. Zip Stream ready.");
+                      console.log("Extraction successful.Stream ready.");
                     } catch (error) {
-                      console.error("Error during PDF splitting:", error);
+                      console.error("Error during PDF extraction:", error);
                     }
                   })();
 servers:
