@@ -196,49 +196,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/docx/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"keepOriginalStyles":true,"templateLiterals":{"additionalProp1":"string","additionalProp2":"string","additionalProp3":"string"}};type=application/json'
-                   -F 'file=@demo.docx;type=application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const docxFile = fs.createReadStream(
-                        __dirname + "/samples/document-simple.docx",
-                      );
-                      const pdfStream = await ff.pdf.fromDocx(
-                        docxFile,
-                        {},
-                        {
-                          timeoutInSeconds: 30,
-                        },
-                      );
-
-                      pdfStream.pipe(fs.createWriteStream("./result_docx.pdf"));
-                      console.log("PDF conversion successful. Stream ready.");
-
-                    } catch (error) {
-                      console.error("Error during PDF conversion:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/generate/:
     post:
       operationId: generatePDFDocument
@@ -361,56 +318,6 @@ paths:
               schema:
                 description: Bad Gateway
                 $ref: '#/components/schemas/def-0'
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/generate/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"test":true,"host":false,"expiresAt":"2024-06-21T12:10:51.382Z","fileName":"document"};type=application/json'
-                   -F 'files=@index.html;type=text/html'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdf = await ff.pdf.generate(
-                        [
-                          new File(
-                            ["<!doctype html><html><body><h1>Hello world</h1></body></html>"],
-                            "index.html",
-                            {
-                              type: "text/html",
-                            },
-                          ),
-                        ],
-                        {
-                          options: {
-                            host: true,
-                          },
-                        },
-                        {
-                          timeoutInSeconds: 30,
-                        },
-                      );
-
-                      console.log(pdf.url);
-                    } catch (error) {
-                      console.error("Error during PDF generation:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/merge/:
     post:
       operationId: mergePDFDocuments
@@ -470,53 +377,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/merge/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={};type=application/json'
-                   -F 'files=@doc.pdf;type=application/pdf'
-                   -F 'files=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdfFiles = [
-                        fs.createReadStream(__dirname + "/pdf1.pdf"),
-                        fs.createReadStream(__dirname + "/pdf2.pdf"),
-                      ];
-                      const mergedPdfStream = await ff.pdf.merge(
-                        pdfFiles,
-                        {
-                          options: {
-                            // Specify merge options if any
-                          },
-                        },
-                        {
-                          timeoutInSeconds: 60,
-                        },
-                      );
-                      mergedPdfStream.pipe(fs.createWriteStream("./result_merge.pdf"));
-                      console.log("PDF merge successful. Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF merge:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/form/detect/:
     post:
       operationId: detectPDFFormFields
@@ -694,47 +554,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/form/detect/'
-                 -H 'accept: application/json'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                      const ff = new FileforgeClient({
-                        apiKey: process.env.FILEFORGE_API_KEY,
-                      });
-
-                      try {
-                        const resultObject = await ff.pdf.form.detect(
-                          new File(
-                            [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                            "form.pdf",
-                            {
-                              type: "application/pdf",
-                            },
-                          ),
-                          { options: {} },
-                        );
-
-                        console.log(resultObject);
-                      } catch (error) {
-                        console.error("Error during PDF form detect:", error);
-                        throw error;
-                      }
-                    })();
   /pdf/form/mark/:
     post:
       operationId: markPDFFormFields
@@ -794,47 +613,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/form/mark/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdfStream = await ff.pdf.form.mark(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        { options: {} },
-                      );
-
-                      pdfStream.pipe(fs.createWriteStream("./result_mark.pdf"));
-                    } catch (error) {
-                      console.error("Error during PDF form mark:", error);
-                      throw error;
-                    }
-                  })();
   /pdf/form/fill/:
     post:
       operationId: fillPDFFormFields
@@ -985,63 +763,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/form/fill/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"fields":[{"name":"string","type":"PDFTextField","value":"string"},{"name":"string","type":"PDFCheckBox","checked":true},{"name":"string","type":"PDFOptionList","selected":["string"]},{"name":"string","type":"PDFRadioGroup","selected":"string"}]};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const formFillRequest = {
-                        options: {
-                          fields: [
-                            {
-                              name: "Producer Name",
-                              type: "PDFTextField",
-                              value: "Titouan Launay",
-                            } as FormFillRequestOptionsFieldsItemValue,
-                          ],
-                        },
-                      };
-                      const requestOptions = {
-                        timeoutInSeconds: 60,
-                        maxRetries: 3,
-                      };
-                      const filledPdfStream = await ff.pdf.form.fill(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        formFillRequest,
-                        requestOptions,
-                      );
-
-                      filledPdfStream.pipe(fs.createWriteStream("./result_filled.pdf"));
-                      console.log("PDF form filling successful. Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF form filling:", error);
-                    }
-                  })();
   /pdf/split/:
     post:
       operationId: splitPDFDocuments
@@ -1109,60 +830,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/split/'
-                 -H 'accept: application/zip'
-                 -H 'X-API-Key : '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={splitPage:1};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const splitRequest = {
-                        options: {
-                          splitPage: 1,
-                        },
-                      };
-                      const requestOptions = {
-                        timeoutInSeconds: 60,
-                        maxRetries: 3,
-                      };
-                      const splitArchiveStream = await ff.pdf.split(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        splitRequest,
-                        requestOptions,
-                      );
-
-                      await pipeline(
-                        splitArchiveStream,
-                        fs.createWriteStream("./result_split.zip"),
-                      );
-                      console.log("Split successful. Zip Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF splitting:", error);
-                    }
-                  })();
   /pdf/extract/:
     post:
       operationId: extractPDFDocuments
@@ -1234,62 +901,6 @@ paths:
                 $ref: '#/components/schemas/def-0'
         '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/extract/'
-                 -H 'accept: application/json'
-                 -H 'X-API-Key
-                : '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={start:1,end:1};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const extractRequest = {
-                        options: {
-                          start: 1,
-                          end: 1,
-                        },
-                      };
-                      const requestOptions = {
-                        timeoutInSeconds: 60,
-                        maxRetries: 3,
-                      };
-                      const extractStream = await ff.pdf.extract(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        extractRequest,
-                        requestOptions,
-                      );
-
-                      await pipeline(
-                        extractStream,
-                        fs.createWriteStream("./result_extract.pdf"),
-                      );
-                      console.log("Extraction successful.Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF extraction:", error);
-                    }
-                  })();
 servers:
   - url: https://api.fileforge.com
     description: Tunnel server
