@@ -16,6 +16,7 @@ const { extractSnippets } = require("./extract_snippets");
       "fill",
       "extract",
       "split",
+      "insert",
     ];
 
     const curlSnippets = {
@@ -77,6 +78,14 @@ const { extractSnippets } = require("./extract_snippets");
 -H 'Content-Type: multipart/form-data'\n \
   -F 'options={splitPage:1};type=application/json'\n \
   -F 'file=@document (18).pdf;type=application/pdf'`,
+      insert: `curl -X 'POST'\n \
+'https://api.fileforge.com/pdf/insert/'\n \
+-H 'accept: application/pdf'\n \
+-H 'X-API-Key : '\n \
+-H 'Content-Type: multipart/form-data'\n \
+  -F 'options={insertPage:1};type=application/json'\n \
+  -F 'files=@doc.pdf;type=application/pdf'\n \
+  -F 'files=@document (18).pdf;type=application/pdf'`,
     };
 
     const keywordToSnippetsMap = {};
