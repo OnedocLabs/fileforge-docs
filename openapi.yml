@@ -5,6 +5,9 @@ info:
   version: 0.1.0
 components:
   securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
     apiKey:
       type: apiKey
       name: X-API-Key
@@ -1285,6 +1288,126 @@ paths:
                       console.log("Extraction successful.Stream ready.");
                     } catch (error) {
                       console.error("Error during PDF extraction:", error);
+                    }
+                  })();
+  /pdf/insert/:
+    post:
+      operationId: insertPDFDocuments
+      summary: Insert a PDF document into another PDF document at a specified page.
+      tags:
+        - PDF
+      description: >-
+        Insert a PDF document into another PDF document at a specified page. The
+        inserted document is named after the original document with a suffix
+        added to indicate the range of pages it contains
+        (ex:document\_inserted\_\$insertPage\_\$document2.pdf). Note: The first
+        document is the parent document and the second document is the document
+        to be inserted.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - options
+                - files
+              properties:
+                options:
+                  required:
+                    - insertPage
+                  type: object
+                  properties:
+                    insertPage:
+                      type: integer
+                      minimum: 1
+                      description: The page number to insert the document at
+                files:
+                  allOf:
+                    - {}
+                    - type: array
+                      items:
+                        type: string
+                        format: binary
+            encoding:
+              options:
+                contentType: application/json
+        required: true
+      security:
+        - apiKey: []
+      x-fern-sdk-group-name:
+        - pdf
+      x-fern-sdk-method-name: insert
+      x-fern-availability: generally-available
+      responses:
+        '201':
+          description: PDF file inserted successfully
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Bad request
+                $ref: '#/components/schemas/def-0'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Unauthorized
+                $ref: '#/components/schemas/def-0'
+        '500':
+          description: Internal server error
+      x-fern-examples:
+        - response:
+            body: null
+          code-samples:
+            - sdk: curl
+              code: |-
+                curl -X 'POST'
+                 'https://api.fileforge.com/pdf/insert/'
+                 -H 'accept: application/pdf'
+                 -H 'X-API-Key : '
+                 -H 'Content-Type: multipart/form-data'
+                   -F 'options={insertPage:1};type=application/json'
+                   -F 'files=@doc.pdf;type=application/pdf'
+                   -F 'files=@document (18).pdf;type=application/pdf'
+            - sdk: typescript
+              code: |-
+                import { FileforgeClient } from "@fileforge/client";
+                import * as fs from "fs";
+
+                (async () => {
+                    const ff = new FileforgeClient({
+                      apiKey: process.env.FILEFORGE_API_KEY,
+                    });
+
+                    try {
+                      const pdfFiles = [
+                        fs.createReadStream(__dirname + "/pdf1.pdf"),
+                        fs.createReadStream(__dirname + "/pdf2.pdf"),
+                      ];
+                      const insertPDFStream = await ff.pdf.insert(
+                        pdfFiles,
+                        {
+                          options: {
+                            // Specify insert options if any
+                            insertPage: 1,
+                          },
+                        },
+                        {
+                          timeoutInSeconds: 60,
+                        },
+                      );
+                      insertPDFStream.pipe(fs.createWriteStream("./result_insert.pdf"));
+                      console.log("PDF inserted successfully. Stream ready.");
+                    } catch (error) {
+                      console.error("Error during PDF insertion:", error);
+                      throw error;
                     }
                   })();
 servers:
