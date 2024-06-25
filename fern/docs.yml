@@ -3,28 +3,98 @@ instances:
     custom-domain: https://docs.fileforge.com
 title: Fileforge
 tabs:
-  welcome:
-    display-name: Welcome
+  getting-started:
+    display-name: Getting Started
   react-print:
     display-name: react-print
     icon: fa-brands fa-react
   API:
     display-name: API Reference
     icon: fa-solid fa-bolt
-  SDK:
-    display-name: SDK Reference
-    icon: fa-solid fa-code
-  help:
-    display-name: Help Center
-    icon: fa-solid fa-question
 navigation:
-  - tab: welcome
+  - tab: getting-started
     layout:
-      - section: Get Started
+      - section: General
         contents:
-          - page: Welcome
+          - page: Getting Started
             path: ./pages/overview/introduction.mdx
             slug: welcome
+          - page: Authentication
+            path: ./pages/api-reference/authentication.mdx
+            slug: authentication
+          - page: Working with Files
+            path: ./pages/sdk-reference/node/working-with-files.mdx
+            slug: node-working-with-files
+      - section: Guide
+        contents:
+          - section: HTML to PDF
+            contents:
+              - section: Generate PDF
+                contents:
+                  - page: Generate a local PDF
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-pdf-from-html-local.mdx
+                    slug: generate-local-pdf-from-html
+                    icon: fa-solid fa-download
+                  - page: Generate a hosted PDF
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-hosted-pdf-from-html.mdx
+                    slug: generate-hosted-pdf-from-html
+                    icon: fa-solid fa-cloud
+                  - page: Generate a PDF with react-print
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-pdf-from-html-react-print.mdx
+                    slug: generate-pdf-from-html
+                    icon: fa-brands fa-react
+                  - page: Generate a PDF with assets
+                    path: >-
+                      ./pages/help_center/html-to-pdf/generate-pdf-from-html-assets.mdx
+                    slug: generate-pdf-from-html-assets
+                    icon: fa-solid fa-paperclip
+              - section: Styling your PDF
+                contents:
+                  - page: Page Layout & Style
+                    path: ./react-print-pdf/docs/guides/page-layout.mdx
+                    slug: page-layout
+                    icon: fa-solid fa-file-pdf
+                  - page: Fonts
+                    path: ./react-print-pdf/docs/guides/fonts.mdx
+                    slug: fonts
+                    icon: fa-solid fa-font
+          - section: DOCX to PDF
+            contents:
+              - page: DOCX to PDF with variables
+                path: ./pages/help_center/docx-to-pdf/convert-docx-to-pdf.mdx
+                slug: convert-docx-to-pdf
+                icon: fa-solid fa-file-word
+          - section: PDF Operations
+            contents:
+              - page: Merge
+                path: ./pages/help_center/merge-pdfs/merge-multiple-pdfs.mdx
+                slug: pdf-merge
+                icon: fa-solid fa-files
+              - page: Split
+                path: ./pages/help_center/split-pdfs/split-pdf.mdx
+                slug: pdf-split
+                icon: fa-solid fa-file-dashed-line
+              - page: Extract Pages
+                path: ./pages/help_center/extract-pages/extract-pages-from-pdf.mdx
+                slug: pdf-extract
+                icon: fa-solid fa-copy
+          - section: PDF Form Operations
+            contents:
+              - page: Detect fields
+                path: ./pages/help_center/pdf-forms/detect.mdx
+                slug: pdf-form-detect
+                icon: fa-solid fa-magnifying-glass
+              - page: Mark fields
+                path: ./pages/help_center/pdf-forms/mark.mdx
+                slug: pdf-form-mark
+                icon: fa-solid fa-pencil
+              - page: Fill fields
+                path: ./pages/help_center/pdf-forms/fill.mdx
+                slug: pdf-form-fill
+                icon: fa-solid fa-pen-to-square
   - tab: react-print
     layout:
       - section: Welcome
@@ -37,16 +107,6 @@ navigation:
             path: ./react-print-pdf/docs/getting-started/setup.mdx
             slug: setup
             icon: fa-solid fa-hammer
-      - section: Guides
-        contents:
-          - page: Page Layout & Style
-            path: ./react-print-pdf/docs/guides/page-layout.mdx
-            slug: page-layout
-            icon: fa-solid fa-file
-          - page: Fonts
-            path: ./react-print-pdf/docs/guides/fonts.mdx
-            slug: fonts
-            icon: fa-solid fa-font
       - section: Contributing
         contents:
           - page: Contributing
@@ -193,79 +253,11 @@ navigation:
           - page: Getting started
             path: ./pages/api-reference/introduction.mdx
             slug: api-reference
-          - page: Authentication
-            path: ./pages/api-reference/authentication.mdx
-            slug: authentication
       - api: API Reference
         snippets:
           typescript: '@fileforge/client'
-  - tab: SDK
-    layout:
-      - section: Getting Started
-        contents:
-          - page: Getting Started
-            path: ./pages/sdk-reference/introduction.mdx
-            slug: sdk-reference
-      - section: JS/Node
-        slug: node
-        contents:
-          - page: Getting Started
-            path: ./pages/sdk-reference/node/introduction.mdx
-            slug: node-sdk-reference
-          - page: Error Handling
-            path: ./pages/sdk-reference/node/errors.mdx
-            slug: node-error-handling
-          - page: Working with Files
-            path: ./pages/sdk-reference/node/working-with-files.mdx
-            slug: node-working-with-files
-          - section: PDF
-            contents:
-              - page: fromDocx
-                path: ./pages/sdk-reference/node/PDF/fromDocx.mdx
-                slug: from-docx
-              - page: generate
-                path: ./pages/sdk-reference/node/PDF/generate.mdx
-                slug: generate-from-html
-              - page: merge
-                path: ./pages/sdk-reference/node/PDF/merge.mdx
-                slug: merge
-              - section: Form
-                contents:
-                  - page: detect
-                    path: ./pages/sdk-reference/node/Form/detect.mdx
-                    slug: detect
-                  - page: mark
-                    path: ./pages/sdk-reference/node/Form/mark.mdx
-                    slug: mark
-                  - page: fill
-                    path: ./pages/sdk-reference/node/Form/fill.mdx
-                    slug: fill
-                  - section: Types
-                    contents:
-                      - page: FormFillRequestOptionsFieldsItem
-                        path: >-
-                          ./pages/sdk-reference/node/Form/Types/formfillrequestoptionsfieldsitem.mdx
-                        slug: formFillRequestOptionsFieldsItem
-                      - page: FormDetectResponseItem
-                        path: >-
-                          ./pages/sdk-reference/node/Form/Types/formdetectresponseitem.mdx
-                        slug: formDetectResponseItem
-  - tab: help
-    layout:
-      - section: HTML to PDF
-        contents:
-          - page: Generate a PDF with react-print
-            path: >-
-              ./pages/help_center/html_to_pdf/generate-pdf-from-html-react-print.mdx
-            slug: generate-pdf-from-html
-          - page: Generate a PDF with assets
-            path: ./pages/help_center/html_to_pdf/generate-pdf-from-html-assets.mdx
-            slug: generate-pdf-from-html-assets
-          - page: Generate a hosted PDF
-            path: ./pages/help_center/html_to_pdf/generate-hosted-pdf-from-html.mdx
-            slug: generate-hosted-pdf
 colors:
-  accentPrimary: '#AD8AFF'
+  accentPrimary: '#82C7FF'
   background:
     dark: '#000000'
     light: '#ffffff'
@@ -278,7 +270,7 @@ layout:
 navbar-links:
   - type: minimal
     text: Support
-    url: mailto:contact@onedoclabs.com
+    url: mailto:contact@fileforge.com
   - type: outlined
     text: Get Started
-    url: https://app.onedoclabs.com/login
+    url: https://app.fileforge.com/login

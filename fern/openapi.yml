@@ -1133,16 +1133,17 @@ paths:
                     });
 
                     try {
-                      const splitRequest = {
+                      const extractRequest = {
                         options: {
-                          splitPage: 1,
+                          start: 1,
+                          end: 1,
                         },
                       };
                       const requestOptions = {
                         timeoutInSeconds: 60,
                         maxRetries: 3,
                       };
-                      const splitArchiveStream = await ff.pdf.split(
+                      const extractStream = await ff.pdf.extract(
                         new File(
                           [fs.readFileSync(__dirname + "/samples/form.pdf")],
                           "form.pdf",
@@ -1150,13 +1151,13 @@ paths:
                             type: "application/pdf",
                           },
                         ),
-                        splitRequest,
+                        extractRequest,
                         requestOptions,
                       );
 
                       await pipeline(
-                        splitArchiveStream,
-                        fs.createWriteStream("./result_split.zip"),
+                        extractStream,
+                        fs.createWriteStream("./result_extract.pdf"),
                       );
                       console.log("Split successful. Zip Stream ready.");
                     } catch (error) {
@@ -1173,7 +1174,7 @@ paths:
         Extracts a range of pages from a PDF document. The start and end pages
         are included in the extracted document. The extracted document is named
         after the original document with a suffix added to indicate the range of
-        pages it contains (ex:document\_extracted\_\$start\_\$end.pdf).
+        pages it contains (ex:document_extracted_$start_$end.pdf).
       requestBody:
         content:
           multipart/form-data:
@@ -1285,9 +1286,9 @@ paths:
                         extractStream,
                         fs.createWriteStream("./result_extract.pdf"),
                       );
-                      console.log("Extraction successful.Stream ready.");
+                      console.log("Split successful. Zip Stream ready.");
                     } catch (error) {
-                      console.error("Error during PDF extraction:", error);
+                      console.error("Error during PDF splitting:", error);
                     }
                   })();
 servers:

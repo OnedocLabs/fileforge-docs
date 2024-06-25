@@ -4,7 +4,8 @@
   "description": "This repo contains the configuration files for the OneDoc's API documentation.  The documentation is built using Fern.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "fern docs dev"
   },
   "keywords": [],
   "author": "",
