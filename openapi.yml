@@ -43,7 +43,7 @@ paths:
       description: Get the status of the API
       x-fern-availability: generally-available
       responses:
-        "200":
+        '200':
           description: Default Response
           content:
             application/json:
@@ -173,28 +173,28 @@ paths:
       x-fern-sdk-method-name: fromDocx
       x-fern-availability: beta
       responses:
-        "201":
+        '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
   /pdf/generate/:
     post:
@@ -278,7 +278,7 @@ paths:
       x-fern-sdk-method-name: generate
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
@@ -295,79 +295,29 @@ paths:
                     type: string
                     format: uri
                     description: URL to the generated PDF document
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
-        "502":
+        '502':
           description: Bad Gateway
           content:
             application/json:
               schema:
                 description: Bad Gateway
-                $ref: "#/components/schemas/def-0"
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/generate/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key: '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={"test":true,"host":false,"expiresAt":"2024-06-21T12:10:51.382Z","fileName":"document"};type=application/json'
-                   -F 'files=@index.html;type=text/html'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdf = await ff.pdf.generate(
-                        [
-                          new File(
-                            ["<!doctype html><html><body><h1>Hello world</h1></body></html>"],
-                            "index.html",
-                            {
-                              type: "text/html",
-                            },
-                          ),
-                        ],
-                        {
-                          options: {
-                            host: true,
-                          },
-                        },
-                        {
-                          timeoutInSeconds: 30,
-                        },
-                      );
-
-                      console.log(pdf.url);
-                    } catch (error) {
-                      console.error("Error during PDF generation:", error);
-                      throw error;
-                    }
-                  })();
+                $ref: '#/components/schemas/def-0'
   /pdf/merge/:
     post:
       operationId: mergePDFDocuments
@@ -404,28 +354,28 @@ paths:
       x-fern-sdk-method-name: merge
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: PDF Document generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
   /pdf/form/detect/:
     post:
@@ -464,7 +414,7 @@ paths:
       x-fern-sdk-method-name: detect
       x-fern-availability: beta
       responses:
-        "200":
+        '200':
           description: Document fields detected successfully
           content:
             application/json:
@@ -487,7 +437,7 @@ paths:
                         properties:
                           x:
                             type: number
-                          "y":
+                          'y':
                             type: number
                           width:
                             type: number
@@ -495,7 +445,7 @@ paths:
                             type: number
                         required:
                           - x
-                          - "y"
+                          - 'y'
                           - width
                           - height
                   required:
@@ -588,21 +538,21 @@ paths:
                           type: string
                       required:
                         - type
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
   /pdf/form/mark/:
     post:
@@ -640,28 +590,28 @@ paths:
       x-fern-sdk-method-name: mark
       x-fern-availability: beta
       responses:
-        "201":
+        '201':
           description: Marked PDF Document generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
   /pdf/form/fill/:
     post:
@@ -790,28 +740,28 @@ paths:
       x-fern-sdk-method-name: fill
       x-fern-availability: beta
       responses:
-        "201":
+        '201':
           description: PDF Document filled successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
   /pdf/split/:
     post:
@@ -857,28 +807,28 @@ paths:
       x-fern-sdk-method-name: split
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: ZIP file generated successfully
           content:
             application/zip:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
   /pdf/extract/:
     post:
@@ -928,85 +878,29 @@ paths:
       x-fern-sdk-method-name: extract
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: Extracted PDF file generated successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/extract/'
-                 -H 'accept: application/json'
-                 -H 'X-API-Key
-                : '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={start:1,end:1};type=application/json'
-                   -F 'file=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const extractRequest = {
-                        options: {
-                          start: 1,
-                          end: 1,
-                        },
-                      };
-                      const requestOptions = {
-                        timeoutInSeconds: 60,
-                        maxRetries: 3,
-                      };
-                      const extractStream = await ff.pdf.extract(
-                        new File(
-                          [fs.readFileSync(__dirname + "/samples/form.pdf")],
-                          "form.pdf",
-                          {
-                            type: "application/pdf",
-                          },
-                        ),
-                        extractRequest,
-                        requestOptions,
-                      );
-
-                      await pipeline(
-                        extractStream,
-                        fs.createWriteStream("./result_extract.pdf"),
-                      );
-                      console.log("Extraction successful.Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF extraction:", error);
-                    }
-                  })();
   /pdf/insert/:
     post:
       operationId: insertPDFDocuments
@@ -1056,77 +950,29 @@ paths:
       x-fern-sdk-method-name: insert
       x-fern-availability: generally-available
       responses:
-        "201":
+        '201':
           description: PDF file inserted successfully
           content:
             application/pdf:
               schema:
                 type: string
                 format: binary
-        "400":
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 description: Bad request
-                $ref: "#/components/schemas/def-0"
-        "401":
+                $ref: '#/components/schemas/def-0'
+        '401':
           description: Unauthorized
           content:
             application/json:
               schema:
                 description: Unauthorized
-                $ref: "#/components/schemas/def-0"
-        "500":
+                $ref: '#/components/schemas/def-0'
+        '500':
           description: Internal server error
-      x-fern-examples:
-        - response:
-            body: null
-          code-samples:
-            - sdk: curl
-              code: |-
-                curl -X 'POST'
-                 'https://api.fileforge.com/pdf/insert/'
-                 -H 'accept: application/pdf'
-                 -H 'X-API-Key : '
-                 -H 'Content-Type: multipart/form-data'
-                   -F 'options={insertPage:1};type=application/json'
-                   -F 'files=@doc.pdf;type=application/pdf'
-                   -F 'files=@document (18).pdf;type=application/pdf'
-            - sdk: typescript
-              code: |-
-                import { FileforgeClient } from "@fileforge/client";
-                import * as fs from "fs";
-
-                (async () => {
-                    const ff = new FileforgeClient({
-                      apiKey: process.env.FILEFORGE_API_KEY,
-                    });
-
-                    try {
-                      const pdfFiles = [
-                        fs.createReadStream(__dirname + "/pdf1.pdf"),
-                        fs.createReadStream(__dirname + "/pdf2.pdf"),
-                      ];
-                      const insertPDFStream = await ff.pdf.insert(
-                        pdfFiles,
-                        {
-                          options: {
-                            // Specify insert options if any
-                            insertPage: 1,
-                          },
-                        },
-                        {
-                          timeoutInSeconds: 60,
-                        },
-                      );
-                      insertPDFStream.pipe(fs.createWriteStream("./result_insert.pdf"));
-                      console.log("PDF inserted successfully. Stream ready.");
-                    } catch (error) {
-                      console.error("Error during PDF insertion:", error);
-                      throw error;
-                    }
-                  })();
 servers:
   - url: https://api.fileforge.com
     description: Tunnel server
