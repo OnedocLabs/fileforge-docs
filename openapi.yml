@@ -636,6 +636,12 @@ paths:
                   required:
                     - fields
                   properties:
+                    flattenForm:
+                      type: boolean
+                      description: >-
+                        Flatten the form fields after filling them. This will
+                        make the PDF form uneditable.
+                      default: false
                     fields:
                       type: array
                       description: Fields to fill or change in the PDF document.
