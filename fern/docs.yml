@@ -8,6 +8,10 @@ tabs:
   react-print:
     display-name: react-print
     icon: fa-brands fa-react
+  pdfreader:
+    display-name: React PDF Viewer
+    icon: fa-brands fa-react
+    url: https://github.com/onedoclabs/pdfreader
   API:
     display-name: API Reference
     icon: fa-solid fa-bolt
@@ -255,12 +259,12 @@ navigation:
             slug: api-reference
       - api: API Reference
         snippets:
-          typescript: '@fileforge/client'
+          typescript: "@fileforge/client"
 colors:
-  accentPrimary: '#82C7FF'
+  accentPrimary: "#82C7FF"
   background:
-    dark: '#000000'
-    light: '#ffffff'
+    dark: "#000000"
+    light: "#ffffff"
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg
