@@ -10,8 +10,8 @@ tabs:
     icon: fa-brands fa-react
   pdfreader:
     display-name: React PDF Viewer
-    icon: fa-brands fa-react
-    url: https://github.com/onedoclabs/pdfreader
+    icon: fa-brands fa-github
+    href: https://github.com/onedoclabs/pdfreader
   API:
     display-name: API Reference
     icon: fa-solid fa-bolt
