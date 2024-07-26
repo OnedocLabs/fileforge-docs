@@ -5,12 +5,16 @@ title: Fileforge
 tabs:
   getting-started:
     display-name: Getting Started
-  react-print:
-    display-name: react-print
-    icon: fa-brands fa-react
   API:
     display-name: API Reference
     icon: fa-solid fa-bolt
+  react-print:
+    display-name: react-print
+    icon: fa-brands fa-react
+  pdfreader:
+    display-name: React PDF Viewer
+    icon: fa-brands fa-github
+    href: https://github.com/onedoclabs/pdfreader
 navigation:
   - tab: getting-started
     layout:
@@ -95,6 +99,16 @@ navigation:
                 path: ./pages/help_center/pdf-forms/fill.mdx
                 slug: pdf-form-fill
                 icon: fa-solid fa-pen-to-square
+  - tab: API
+    layout:
+      - section: Introduction
+        contents:
+          - page: Getting started
+            path: ./pages/api-reference/introduction.mdx
+            slug: api-reference
+      - api: API Reference
+        snippets:
+          typescript: "@fileforge/client"
   - tab: react-print
     layout:
       - section: Welcome
@@ -246,21 +260,12 @@ navigation:
                 path: ./react-print-pdf/docs/ui/templates/scientific-report.mdx
                 slug: scientific-report
             icon: fa-solid fa-flask
-  - tab: API
-    layout:
-      - section: Introduction
-        contents:
-          - page: Getting started
-            path: ./pages/api-reference/introduction.mdx
-            slug: api-reference
-      - api: API Reference
-        snippets:
-          typescript: '@fileforge/client'
+  - tab: pdfreader
 colors:
-  accentPrimary: '#82C7FF'
+  accentPrimary: "#82C7FF"
   background:
-    dark: '#000000'
-    light: '#ffffff'
+    dark: "#000000"
+    light: "#ffffff"
 logo:
   dark: ./assets/logo-white.svg
   light: ./assets/logo-black.svg
