@@ -65,6 +65,10 @@ navigation:
                     path: ./react-print-pdf/docs/guides/fonts.mdx
                     slug: fonts
                     icon: fa-solid fa-font
+                  - page: References
+                    path: ./react-print-pdf/docs/guides/references.mdx
+                    slug: references
+                    icon: fa-solid fa-bookmark
           - section: DOCX to PDF
             contents:
               - page: DOCX to PDF with variables
