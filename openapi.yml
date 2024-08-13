@@ -300,8 +300,8 @@ paths:
                       format: date-time
                       description: >-
                         If host is enabled, the expiration date of the presigned
-                        URL. Defaults to 7 days from now. Cannot exceed 7 days
-                        from now.
+                        URL. Defaults to 7 days from now. If more than 7 days,
+                        the document will be hosted for a monthly fee.
                     fileName:
                       type: string
                       description: >-
@@ -402,7 +402,27 @@ paths:
               properties:
                 options:
                   type: object
-                  properties: {}
+                  properties:
+                    host:
+                      type: boolean
+                      description: >-
+                        If enabled, the document will be hosted by FileForge and
+                        a presigned URL will be returned.
+                      default: false
+                    expiresAt:
+                      type: string
+                      format: date-time
+                      description: >-
+                        If host is enabled, the expiration date of the presigned
+                        URL. Defaults to 7 days from now. If more than 7 days,
+                        the document will be hosted for a monthly fee.
+                    fileName:
+                      type: string
+                      description: >-
+                        The name of the generated PDF file. Defaults to
+                        document. The file name should not contain extensions
+                        nor path traversals.
+                      default: document
                 files:
                   allOf:
                     - {}
@@ -428,6 +448,16 @@ paths:
               schema:
                 type: string
                 format: binary
+            application/json:
+              schema:
+                type: object
+                required:
+                  - url
+                properties:
+                  url:
+                    type: string
+                    format: uri
+                    description: URL to the merged PDF document
         '400':
           description: Bad request
           content:
