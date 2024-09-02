@@ -227,6 +227,13 @@ paths:
                         document. The file name should not contain extensions
                         nor path traversals.
                       default: document
+                    allowViewing:
+                      type: boolean
+                      description: >-
+                        If enabled, the document will be viewable in the web
+                        app. Defaults to false. This may go against the privacy
+                        policy of your application.
+                      default: false
                 files:
                   description: >-
                     Files to generate the PDF document from.
@@ -341,6 +348,13 @@ paths:
                         document. The file name should not contain extensions
                         nor path traversals.
                       default: document
+                    allowViewing:
+                      type: boolean
+                      description: >-
+                        If enabled, the document will be viewable in the web
+                        app. Defaults to false. This may go against the privacy
+                        policy of your application.
+                      default: false
                 files:
                   allOf:
                     - {}
